@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     tools:context="com.manduannabelle.www.fooddiary.MainActivity">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
 
     <include
         android:id="@+id/cardview"
         layout="@layout/cardview"/>
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
 
 
 </android.support.constraint.ConstraintLayout>

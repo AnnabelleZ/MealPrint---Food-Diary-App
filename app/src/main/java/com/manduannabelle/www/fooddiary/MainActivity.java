@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         // for the date on the toolbar
         Calendar calendar = Calendar.getInstance();
-        String currentDate = DateFormat.getDateInstance(DateFormat.DAY_OF_WEEK_IN_MONTH_FIELD).format(calendar.getTime());
+        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
 
         TextView textViewDate = findViewById(R.id.text_view_date);
         textViewDate.setText(currentDate);
