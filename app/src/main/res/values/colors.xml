@@ -6,4 +6,5 @@
     <color name="colorDashboard">#f5c851</color>
     <color name="colorDashboardDeep">#ef823f</color>
     <color name="white">#ffffff</color>
+    <color name="gray">#cccccc</color>
 </resources>
