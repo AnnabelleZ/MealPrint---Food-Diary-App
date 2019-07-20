@@ -2,20 +2,18 @@ package com.manduannabelle.www.fooddiary;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.CardView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
-
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
+import android.content.Intent;
 
-public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
+public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +31,16 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // when card1 is clicked
+        CardView card1 = findViewById(R.id.card1);
+
+        card1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            // go to singleMeal1Activity
+            startActivity(new Intent(MainActivity.this, SingleMeal1Activity.class));
+            }
+        });
     }
 
     @Override
@@ -69,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     }
 
-    public void showPopup(View v) {
+    /*public void showPopup(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         popup.setOnMenuItemClickListener(this);
         popup.inflate(R.menu.popup_addphoto);
@@ -88,5 +96,5 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             default:
                 return false;
         }
-    }
+    }*/
 }
