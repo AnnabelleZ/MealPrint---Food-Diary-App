@@ -24,23 +24,45 @@
                 <ImageView
                     android:id="@+id/meal1_image"
                     android:contentDescription="@string/contentdescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="200dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
                     android:scaleType="centerCrop"/>
 
-                <EditText
-                    android:id="@+id/meal1_title"
-                    android:labelFor="@id/meal1_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:hint="@string/meal1title"
-                    android:paddingTop="10dp"
-                    android:drawableEnd="@drawable/ic_edit"
-                    android:drawablePadding="6dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@android:color/transparent" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/meal1_title_editview"
+                        android:labelFor="@id/meal1_title_editview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/colorAccent"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:hint="@string/meal1title"
+                        android:paddingTop="10dp"
+                        android:drawableEnd="@drawable/ic_edit"
+                        android:drawablePadding="6dp"
+                        android:background="@android:color/transparent" />
+
+                    <TextView
+                        android:id="@+id/meal1_title_textview"
+                        android:labelFor="@id/meal1_title_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/colorAccent"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:paddingTop="10dp"
+                        android:drawableEnd="@drawable/ic_edit"
+                        android:drawablePadding="6dp"
+                        android:background="@android:color/transparent"
+                        android:visibility="invisible"/>
+
+
+                </RelativeLayout>
+
 
                 <EditText
                     android:id="@+id/meal1_note"

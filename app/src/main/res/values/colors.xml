@@ -7,4 +7,5 @@
     <color name="colorDashboardDeep">#ef823f</color>
     <color name="white">#ffffff</color>
     <color name="gray">#cccccc</color>
+    <color name="darkgray">#808080</color>
 </resources>
