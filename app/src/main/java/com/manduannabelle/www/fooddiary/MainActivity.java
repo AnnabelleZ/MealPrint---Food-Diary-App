@@ -1,5 +1,6 @@
 package com.manduannabelle.www.fooddiary;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -16,11 +17,18 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.util.Calendar;
 import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity{
+    public static final String SHARED_PREFS = "sharedPrefs";
+    private String meal1_title;
+    private String imgPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,24 +57,62 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+        loadCardBackground();
+        loadCardTitle();
+
         // set card1 title
-        Intent intent = getIntent();
+        /*Intent intent = getIntent();
         if (intent.hasExtra(SingleMeal1Activity.EXTRA_TEXT)) {
             TextView card1text = findViewById(R.id.card1text);
             card1text.setTextColor(getResources().getColor(R.color.white));
             String text = intent.getStringExtra(SingleMeal1Activity.EXTRA_TEXT);
             card1text.setText(text);
             card1text.setText(text.toUpperCase());
-        }
+        }*/
         // set card1 background
-        if (intent.hasExtra(SingleMeal1Activity.EXTRA_DRAWABLE)) {
+        /*if (intent.hasExtra(SingleMeal1Activity.EXTRA_DRAWABLE)) {
             Bitmap bitmap = BitmapFactory.decodeByteArray(
                     intent.getByteArrayExtra(SingleMeal1Activity.EXTRA_DRAWABLE), 0,
                     intent.getByteArrayExtra(SingleMeal1Activity.EXTRA_DRAWABLE).length);
             Drawable d = new BitmapDrawable(getResources(), rotateBitmap(bitmap));
+
             LinearLayout card1background = findViewById(R.id.card1background);
             d.setColorFilter(getResources().getColor(R.color.darkgray), PorterDuff.Mode.DARKEN);
             card1background.setBackground(d);
+        }*/
+        /*if (intent.hasExtra(SingleMeal1Activity.EXTRA_PATH)) {
+            LinearLayout card1background = findViewById(R.id.card1background);
+            String path = intent.getStringExtra(SingleMeal1Activity.EXTRA_PATH);
+            loadCardBackground(path, card1background);
+        }*/
+    }
+
+    private void loadCardBackground() {
+        LinearLayout card1background = findViewById(R.id.card1background);
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        imgPath = sharedPreferences.getString("meal1_imgPath", "");
+        if (!imgPath.isEmpty()) {
+            try {
+                File f = new File(imgPath, "profile.jpg");
+                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+                if (b != null) {
+                    Drawable d = new BitmapDrawable(getResources(), b);
+                    d.setColorFilter(getResources().getColor(R.color.darkgray), PorterDuff.Mode.DARKEN);
+                    card1background.setBackground(d);
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void loadCardTitle() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        meal1_title = sharedPreferences.getString("meal1_title", "");
+        if (!meal1_title.isEmpty()) {
+            TextView card1text = findViewById(R.id.card1text);
+            card1text.setTextColor(getResources().getColor(R.color.white));
+            card1text.setText(meal1_title.toUpperCase());
         }
     }
 
