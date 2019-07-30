@@ -25,7 +25,7 @@
             android:clickable="true"
             android:focusable="true">
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/card1background"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
@@ -40,7 +40,17 @@
                     android:textColor="@color/colorDashboardDeep"
                     android:textSize="22sp" />
 
-            </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"/>
+
+            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -55,7 +65,7 @@
             app:cardElevation="10dp"
             android:layout_height="150dp">
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/card2background"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
@@ -68,7 +78,18 @@
                     android:text="@string/lunch"
                     android:textColor="@color/colorDashboardDeep"
                     android:textSize="22sp" />
-            </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -83,7 +104,7 @@
             app:cardElevation="10dp"
             android:layout_height="150dp">
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/card3background"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
@@ -96,7 +117,18 @@
                     android:text="@string/dinner"
                     android:textColor="@color/colorDashboardDeep"
                     android:textSize="22sp" />
-            </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -110,19 +142,29 @@
             app:cardElevation="10dp"
             android:layout_height="150dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_add"
-                android:layout_gravity="center"/>
-
-            <!--TextView
-                android:layout_width="match_parent"
+            <RelativeLayout
+                android:id="@+id/card4background"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/addmore"
-                android:textColor="@color/colorAccent"
-                android:textSize="22sp" /-->
+                android:layout_width="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/ic_add"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"/>
+
+            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 

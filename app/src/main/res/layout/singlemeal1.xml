@@ -5,56 +5,73 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
->
-        <ScrollView
+    >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/singlemeal_toolbar">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="16dp"
-            android:paddingTop="16dp"
-            android:layout_alignParentStart="true"
-            android:layout_below="@id/singlemeal_toolbar">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="250dp">
 
                 <ImageView
                     android:id="@+id/meal1_image"
                     android:contentDescription="@string/contentdescription"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="centerCrop" />
 
-                <EditText
-                    android:id="@+id/meal1_title"
-                    android:labelFor="@id/meal1_title"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent"
-                    android:layout_gravity="center_horizontal"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:paddingTop="10dp"
-                    android:drawableEnd="@drawable/ic_edit"
-                    android:drawablePadding="6dp"
-                    android:hint="@string/meal1title"
-                    android:background="@android:color/transparent"/>
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:text="8:00 AM"/>
 
-                <EditText
-                    android:id="@+id/meal1_note"
-                    android:labelFor="@id/meal1_note"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:hint="@string/note"
-                    android:backgroundTint="@color/colorDashboardDeep"
-                    />
-            </LinearLayout>
+            </RelativeLayout>
 
-        </ScrollView>
+            <EditText
+                android:id="@+id/meal1_title"
+                android:labelFor="@id/meal1_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:layout_gravity="center_horizontal"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:paddingTop="10dp"
+                android:drawableEnd="@drawable/ic_edit"
+                android:drawablePadding="6dp"
+                android:hint="@string/meal1title"
+                android:background="@android:color/transparent"/>
+
+            <EditText
+                android:id="@+id/meal1_note"
+                android:labelFor="@id/meal1_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:hint="@string/note"
+                android:backgroundTint="@color/colorDashboardDeep"
+                />
+        </LinearLayout>
+
+    </ScrollView>
 
     <include
         android:id="@+id/singlemeal_toolbar"
