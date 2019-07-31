@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,10 +26,8 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import android.content.Intent;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
-    private String meal1_title;
-    private String imgPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,45 +51,20 @@ public class MainActivity extends AppCompatActivity{
         card1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            // go to singleMeal1Activity
+                // go to singleMeal1Activity
                 startActivity(new Intent(MainActivity.this, SingleMeal1Activity.class));
             }
         });
 
         loadCardBackground();
         loadCardTitle();
-
-        // set card1 title
-        /*Intent intent = getIntent();
-        if (intent.hasExtra(SingleMeal1Activity.EXTRA_TEXT)) {
-            TextView card1text = findViewById(R.id.card1text);
-            card1text.setTextColor(getResources().getColor(R.color.white));
-            String text = intent.getStringExtra(SingleMeal1Activity.EXTRA_TEXT);
-            card1text.setText(text);
-            card1text.setText(text.toUpperCase());
-        }*/
-        // set card1 background
-        /*if (intent.hasExtra(SingleMeal1Activity.EXTRA_DRAWABLE)) {
-            Bitmap bitmap = BitmapFactory.decodeByteArray(
-                    intent.getByteArrayExtra(SingleMeal1Activity.EXTRA_DRAWABLE), 0,
-                    intent.getByteArrayExtra(SingleMeal1Activity.EXTRA_DRAWABLE).length);
-            Drawable d = new BitmapDrawable(getResources(), rotateBitmap(bitmap));
-
-            LinearLayout card1background = findViewById(R.id.card1background);
-            d.setColorFilter(getResources().getColor(R.color.darkgray), PorterDuff.Mode.DARKEN);
-            card1background.setBackground(d);
-        }*/
-        /*if (intent.hasExtra(SingleMeal1Activity.EXTRA_PATH)) {
-            LinearLayout card1background = findViewById(R.id.card1background);
-            String path = intent.getStringExtra(SingleMeal1Activity.EXTRA_PATH);
-            loadCardBackground(path, card1background);
-        }*/
+        loadCardTime();
     }
 
     private void loadCardBackground() {
-        LinearLayout card1background = findViewById(R.id.card1background);
+        RelativeLayout card1background = findViewById(R.id.card1background);
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        imgPath = sharedPreferences.getString("meal1_imgPath", "");
+        String imgPath = sharedPreferences.getString("meal1_imgPath", "");
         if (!imgPath.isEmpty()) {
             try {
                 File f = new File(imgPath, "profile.jpg");
@@ -108,7 +82,7 @@ public class MainActivity extends AppCompatActivity{
 
     private void loadCardTitle() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        meal1_title = sharedPreferences.getString("meal1_title", "");
+        String meal1_title = sharedPreferences.getString("meal1_title", "");
         if (!meal1_title.isEmpty()) {
             TextView card1text = findViewById(R.id.card1text);
             card1text.setTextColor(getResources().getColor(R.color.white));
@@ -116,10 +90,19 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
+    private void loadCardTime() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        String meal1_time = sharedPreferences.getString("meal1_time", "");
+        if (!meal1_time.isEmpty()) {
+            TextView card1time = findViewById(R.id.card1time);
+            card1time.setText(meal1_time);
+        }
+    }
+
     public static Bitmap rotateBitmap(Bitmap source) {
         Matrix matrix = new Matrix();
         matrix.postRotate(270);
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(source, source.getWidth(),source.getHeight(), true);
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(source, source.getWidth(), source.getHeight(), true);
         return Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
     }
 
@@ -156,25 +139,4 @@ public class MainActivity extends AppCompatActivity{
         }
 
     }
-
-    /*public void showPopup(View v) {
-        PopupMenu popup = new PopupMenu(this, v);
-        popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.popup_addphoto);
-        popup.show();
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.takephoto:
-                Toast.makeText(this, "Take photo clicked", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.choosefromgallery:
-                Toast.makeText(this, "Choose from gallery clicked", Toast.LENGTH_SHORT).show();
-                return true;
-            default:
-                return false;
-        }
-    }*/
 }

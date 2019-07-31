@@ -41,6 +41,7 @@
                     android:textSize="22sp" />
 
                 <TextView
+                    android:id="@+id/card1time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
@@ -80,6 +81,7 @@
                     android:textSize="22sp" />
 
                 <TextView
+                    android:id="@+id/card2time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
@@ -119,6 +121,7 @@
                     android:textSize="22sp" />
 
                 <TextView
+                    android:id="@+id/card3time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
@@ -155,6 +158,7 @@
                     android:background="@drawable/ic_add"/>
 
                 <TextView
+                    android:id="@+id/card4time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"

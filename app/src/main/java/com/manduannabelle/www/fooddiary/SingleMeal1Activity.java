@@ -1,6 +1,7 @@
 package com.manduannabelle.www.fooddiary;
 
 import android.app.Activity;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -15,7 +16,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.graphics.Matrix;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -25,6 +29,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.ConcurrentModificationException;
 
 import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
 
@@ -41,6 +46,8 @@ public class SingleMeal1Activity extends AppCompatActivity {
     private String meal1_title = "";
     private String meal1_note = "";
     private Boolean imgSet;
+    private TextView time;
+    private String meal1_time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,7 @@ public class SingleMeal1Activity extends AppCompatActivity {
         textViewDate.setText(currentDate);
 
         meal1image = findViewById(R.id.meal1_image);
+        time = findViewById(R.id.meal1_time);
         loadImageIndicator();
         loadData();
         updateViews();
@@ -69,6 +77,61 @@ public class SingleMeal1Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 backToMain();
+            }
+        });
+        setMealTime();
+        if (imgSet) {
+            time.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void setDefaultTime() {
+        Calendar calendar = Calendar.getInstance();
+        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+        int currentMin = calendar.get(Calendar.MINUTE);
+        time.setText(formatTime(calendar, currentHour, currentMin));
+    }
+
+    public String formatTime(Calendar calendar, int hourOfDay, int min) {
+        String amPm;
+        if (hourOfDay >= 12 && hourOfDay < 24) {
+            amPm = "PM";
+        } else {
+            amPm = "AM";
+        }
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        int hour = calendar.get(Calendar.HOUR);
+        if (hour == 0) hour = 12;
+        return hour + ":" + String.format("%02d", min) + amPm;
+    }
+
+    public void setMealTime() {
+        time.setOnClickListener(new View.OnClickListener() {
+            int currentHour;
+            int currentMinute;
+
+            @Override
+            public void onClick(View view) {
+                final Calendar calendar = Calendar.getInstance();
+                currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+                currentMinute = calendar.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(SingleMeal1Activity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        /*String amPm;
+                        if (hourOfDay > 12) {
+                            amPm = "PM";
+                        } else {
+                            amPm = "AM";
+                        }
+                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        int hour = calendar.get(Calendar.HOUR);
+                        if (hour == 0) hour = 12;*/
+                        time.setText(formatTime(calendar, hourOfDay, minute));
+                    }
+                }, currentHour, currentMinute, false);
+                timePickerDialog.show();
             }
         });
     }
@@ -107,6 +170,7 @@ public class SingleMeal1Activity extends AppCompatActivity {
         editor.putString("meal1_note", editNote.getText().toString());
         if (selectedImage != null)
             editor.putString("meal1_imgPath", saveImageToInternalStorage(MainActivity.rotateBitmap(selectedImage)));
+        editor.putString("meal1_time", time.getText().toString());
 
         editor.apply();
 
@@ -118,6 +182,7 @@ public class SingleMeal1Activity extends AppCompatActivity {
         meal1_title = sharedPreferences.getString("meal1_title", "Breakfast");
         meal1_note = sharedPreferences.getString("meal1_note", "");
         imgPath = sharedPreferences.getString("meal1_imgPath", "");
+        meal1_time = sharedPreferences.getString("meal1_time", "");
     }
 
     public void updateViews() {
@@ -125,6 +190,7 @@ public class SingleMeal1Activity extends AppCompatActivity {
         editNote.setText(meal1_note);
         if (imgSet)
             loadImageFromStorage(imgPath);
+        time.setText(meal1_time);
     }
 
 
@@ -171,10 +237,6 @@ public class SingleMeal1Activity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(EXTRA_TEXT, meal1_title);
 
-        // if selectedImage is not null, means new photo taken, need to change card1 background
-        // send card1 background
-        //ByteArrayOutputStream bs = new ByteArrayOutputStream();
-        //selectedImage.compress(Bitmap.CompressFormat.PNG, 80, bs);
         intent.putExtra(EXTRA_PATH, imgPath);
         startActivity(intent);
     }
@@ -199,14 +261,9 @@ public class SingleMeal1Activity extends AppCompatActivity {
         if (requestCode == 1213 && resultCode == Activity.RESULT_OK) {
             String filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
             selectedImage = BitmapFactory.decodeFile(filePath);
-            //Drawable d = new BitmapDrawable(getResources(), selectedImage);
-            //card1background.setBackground(d);
             meal1image.setImageBitmap(MainActivity.rotateBitmap(selectedImage));
-            /*Matrix matrix = new Matrix();
-            meal1image.setScaleType(ImageView.ScaleType.MATRIX);   //required
-            matrix.postRotate((float) -90, meal1image.getDrawable().getBounds().width()/2, meal1image.getDrawable().getBounds().height()/2);
-            meal1image.setImageMatrix(matrix); */
-            //card1background.setBackground(meal1image.getDrawable());
+            setDefaultTime();
+            time.setVisibility(View.VISIBLE);
         }
     }
 }
