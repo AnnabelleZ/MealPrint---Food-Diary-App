@@ -66,6 +66,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, SingleMeal2Activity.class));
             }
         });
+        card3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // go to singleMeal2Activity
+                startActivity(new Intent(MainActivity.this, SingleMeal3Activity.class));
+            }
+        });
+
 
         loadCardBackground();
         loadCardTitle();
@@ -75,17 +83,20 @@ public class MainActivity extends AppCompatActivity {
     private void loadCardBackground() {
         RelativeLayout card1background = findViewById(R.id.card1background);
         RelativeLayout card2background = findViewById(R.id.card2background);
+        RelativeLayout card3background = findViewById(R.id.card3background);
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String imgPath1 = sharedPreferences.getString("meal1_imgPath", "");
         String imgPath2 = sharedPreferences.getString("meal2_imgPath", "");
-        loadImageFromPath(card1background, imgPath1);
-        loadImageFromPath(card2background, imgPath2);
+        String imgPath3 = sharedPreferences.getString("meal3_imgPath", "");
+        loadImageFromPath(card1background, imgPath1, "meal1.jpg");
+        loadImageFromPath(card2background, imgPath2, "meal2.jpg");
+        loadImageFromPath(card3background, imgPath3, "meal3.jpg");
     }
 
-    private void loadImageFromPath(RelativeLayout background, String imgPath) {
+    private void loadImageFromPath(RelativeLayout background, String imgPath, String name) {
         if (!imgPath.isEmpty()) {
             try {
-                File f = new File(imgPath, "profile.jpg");
+                File f = new File(imgPath, name);
                 Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
                 if (b != null) {
                     Drawable d = new BitmapDrawable(getResources(), b);
@@ -102,10 +113,13 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String meal1_title = sharedPreferences.getString("meal1_title", "");
         String meal2_title = sharedPreferences.getString("meal2_title", "");
+        String meal3_title = sharedPreferences.getString("meal3_title", "");
         TextView card1text = findViewById(R.id.card1text);
         TextView card2text = findViewById(R.id.card2text);
+        TextView card3text = findViewById(R.id.card3text);
         setTitle(card1text, meal1_title);
         setTitle(card2text, meal2_title);
+        setTitle(card3text, meal3_title);
     }
 
     private void setTitle(TextView view, String text) {
@@ -119,23 +133,19 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String meal1_time = sharedPreferences.getString("meal1_time", "");
         String meal2_time = sharedPreferences.getString("meal2_time", "");
+        String meal3_time = sharedPreferences.getString("meal3_time", "");
         TextView card1time = findViewById(R.id.card1time);
         TextView card2time = findViewById(R.id.card2time);
+        TextView card3time = findViewById(R.id.card3time);
         setTime(card1time, meal1_time);
         setTime(card2time, meal2_time);
+        setTime(card3time, meal3_time);
     }
 
     private void setTime(TextView view, String text) {
         if (!text.isEmpty()) {
             view.setText(text);
         }
-    }
-
-    public static Bitmap rotateBitmap(Bitmap source) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(270);
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(source, source.getWidth(), source.getHeight(), true);
-        return Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
     }
 
     @Override

@@ -34,29 +34,29 @@ import java.util.Locale;
 
 import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
 
-public class SingleMeal2Activity extends AppCompatActivity {
+public class SingleMeal3Activity extends AppCompatActivity {
     public static final String EXTRA_PATH = "com.manduannabelle.www.fooddiary.EXTRA_PATH";
     public static final String EXTRA_TEXT = "com.manduannabelle.www.fooddiary.EXTRA_TEXT";
     public static final String SHARED_PREFS = "sharedPrefs";
-    private ImageView meal2image;
+    private ImageView meal3image;
     private Bitmap selectedImage;
     private String imgPath;
     private EditText editTitle;
     private EditText editNote;
-    private String meal2_title = "";
-    private String meal2_note = "";
+    private String meal3_title = "";
+    private String meal3_note = "";
     private Boolean imgSet;
     private TextView time;
-    private String meal2_time;
-    ImageManager imgManager = new ImageManager(SingleMeal2Activity.this);
+    private String meal3_time;
+    ImageManager imgManager = new ImageManager(SingleMeal3Activity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.singlemeal2);
+        setContentView(R.layout.singlemeal3);
 
-        editTitle = findViewById(R.id.meal2_title);
-        editNote = findViewById(R.id.meal2_note);
+        editTitle = findViewById(R.id.meal3_title);
+        editNote = findViewById(R.id.meal3_note);
 
         // for the date on the toolbar
         Calendar calendar = Calendar.getInstance();
@@ -65,8 +65,8 @@ public class SingleMeal2Activity extends AppCompatActivity {
         TextView textViewDate = findViewById(R.id.text_view_date);
         textViewDate.setText(currentDate);
 
-        meal2image = findViewById(R.id.meal2_image);
-        time = findViewById(R.id.meal2_time);
+        meal3image = findViewById(R.id.meal3_image);
+        time = findViewById(R.id.meal3_time);
         loadImageIndicator();
         loadData();
         updateViews();
@@ -93,7 +93,7 @@ public class SingleMeal2Activity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                TimeManager.timePickerImplementer(currentHour, currentMinute, SingleMeal2Activity.this, time);
+                TimeManager.timePickerImplementer(currentHour, currentMinute, SingleMeal3Activity.this, time);
             }
         });
     }
@@ -101,13 +101,13 @@ public class SingleMeal2Activity extends AppCompatActivity {
     /*public void saveImageIndicator() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("meal2_imgSet", imgSet);
+        editor.putBoolean("meal3_imgSet", imgSet);
         editor.apply();
     }*/
 
     public void loadImageIndicator() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        imgSet = sharedPreferences.getBoolean("meal2_imgSet", false);
+        imgSet = sharedPreferences.getBoolean("meal3_imgSet", false);
     }
 
     public void saveData() {
@@ -115,11 +115,11 @@ public class SingleMeal2Activity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         // save data
-        editor.putString("meal2_title", editTitle.getText().toString());
-        editor.putString("meal2_note", editNote.getText().toString());
+        editor.putString("meal3_title", editTitle.getText().toString());
+        editor.putString("meal3_note", editNote.getText().toString());
         if (selectedImage != null)
-            editor.putString("meal2_imgPath", imgManager.saveImageToInternalStorage(ImageManager.rotateBitmap(selectedImage), 2));
-        editor.putString("meal2_time", time.getText().toString());
+            editor.putString("meal3_imgPath", imgManager.saveImageToInternalStorage(ImageManager.rotateBitmap(selectedImage), 3));
+        editor.putString("meal3_time", time.getText().toString());
 
         editor.apply();
 
@@ -128,18 +128,18 @@ public class SingleMeal2Activity extends AppCompatActivity {
 
     public void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        meal2_title = sharedPreferences.getString("meal2_title", "Lunch");
-        meal2_note = sharedPreferences.getString("meal2_note", "");
-        imgPath = sharedPreferences.getString("meal2_imgPath", "");
-        meal2_time = sharedPreferences.getString("meal2_time", "");
+        meal3_title = sharedPreferences.getString("meal3_title", "Dinner");
+        meal3_note = sharedPreferences.getString("meal3_note", "");
+        imgPath = sharedPreferences.getString("meal3_imgPath", "");
+        meal3_time = sharedPreferences.getString("meal3_time", "");
     }
 
     public void updateViews() {
-        editTitle.setText(meal2_title);
-        editNote.setText(meal2_note);
+        editTitle.setText(meal3_title);
+        editNote.setText(meal3_note);
         if (imgSet)
-            imgManager.loadImageFromStorage(imgPath, 2, meal2image);
-        time.setText(meal2_time);
+            imgManager.loadImageFromStorage(imgPath, 3, meal3image);
+        time.setText(meal3_time);
     }
 
 
@@ -148,7 +148,7 @@ public class SingleMeal2Activity extends AppCompatActivity {
         // path to /data/data/FoodDiary/app_data/imageDir
         File dir = cw.getDir("imageDir", Context.MODE_PRIVATE);
         // Create imageDir
-        File myPath = new File(dir, "meal2.jpg");
+        File myPath = new File(dir, "meal3.jpg");
 
         FileOutputStream fos = null;
 
@@ -170,22 +170,22 @@ public class SingleMeal2Activity extends AppCompatActivity {
 
     private void loadImageFromStorage(String path) {
         try {
-            File f = new File(path, "meal2.jpg");
+            File f = new File(path, "meal3.jpg");
             Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
             if (b != null)
-                meal2image.setImageBitmap(b);
+                meal3image.setImageBitmap(b);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    }*/
+    } */
 
     public void backToMain() {
         saveData();
         loadData();
 
-        // switch from SingleMeal2Activity to MainActivity
+        // switch from SingleMeal3Activity to MainActivity
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(EXTRA_TEXT, meal2_title);
+        intent.putExtra(EXTRA_TEXT, meal3_title);
 
         intent.putExtra(EXTRA_PATH, imgPath);
         startActivity(intent);
@@ -203,6 +203,7 @@ public class SingleMeal2Activity extends AppCompatActivity {
         }
     }
 
+
     public void retake() {
         // retake photo
         TextView retake = findViewById(R.id.toolbar_retake);
@@ -210,7 +211,7 @@ public class SingleMeal2Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 imgSet = false;
-                imgManager.saveImageIndicator(2, imgSet);
+                imgManager.saveImageIndicator(3, imgSet);
                 takePhoto();
             }
         });
@@ -223,11 +224,11 @@ public class SingleMeal2Activity extends AppCompatActivity {
         if (requestCode == 1213 && resultCode == Activity.RESULT_OK) {
             String filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
             selectedImage = BitmapFactory.decodeFile(filePath);
-            meal2image.setImageBitmap(ImageManager.rotateBitmap(selectedImage));
+            meal3image.setImageBitmap(ImageManager.rotateBitmap(selectedImage));
             TimeManager.setDefaultTime(time);
             time.setVisibility(View.VISIBLE);
             imgSet = true;
-            imgManager.saveImageIndicator(2, imgSet);
+            imgManager.saveImageIndicator(3, imgSet);
         }
     }
 }
