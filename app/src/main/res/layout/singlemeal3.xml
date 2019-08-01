@@ -26,14 +26,14 @@ xmlns:app="http://schemas.android.com/apk/res-auto"-->
                 android:layout_height="250dp">
 
                 <ImageView
-                    android:id="@+id/meal1_image"
+                    android:id="@+id/meal3_image"
                     android:contentDescription="@string/contentdescription"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
                     android:scaleType="centerCrop" />
 
                 <TextView
-                    android:id="@+id/meal1_time"
+                    android:id="@+id/meal3_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -49,7 +49,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"-->
             </RelativeLayout>
 
             <EditText
-                android:id="@+id/meal1_title"
+                android:id="@+id/meal3_title"
                 android:inputType="text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,12 +57,12 @@ xmlns:app="http://schemas.android.com/apk/res-auto"-->
                 android:layout_gravity="center_horizontal"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:paddingTop="10dp"
-                android:autofillHints="@string/meal1title"
-                android:hint="@string/meal1title"
+                android:autofillHints="@string/meal3title"
+                android:hint="@string/meal3title"
                 android:background="@android:color/transparent"/>
 
             <EditText
-                android:id="@+id/meal1_note"
+                android:id="@+id/meal3_note"
                 android:inputType="textAutoCorrect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

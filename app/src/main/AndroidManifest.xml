@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SingleMeal1Activity"/>
+        <activity android:name=".SingleMeal2Activity"/>
     </application>
 
 </manifest>

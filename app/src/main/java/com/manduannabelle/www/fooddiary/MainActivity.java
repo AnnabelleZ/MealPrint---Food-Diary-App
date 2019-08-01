@@ -26,6 +26,8 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import android.content.Intent;
 
+import org.w3c.dom.Text;
+
 public class MainActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
 
@@ -45,14 +47,23 @@ public class MainActivity extends AppCompatActivity {
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // when card1 is clicked
+        // add onclick listener to cards
         CardView card1 = findViewById(R.id.card1);
+        CardView card2 = findViewById(R.id.card2);
+        CardView card3 = findViewById(R.id.card3);
 
         card1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // go to singleMeal1Activity
                 startActivity(new Intent(MainActivity.this, SingleMeal1Activity.class));
+            }
+        });
+        card2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // go to singleMeal2Activity
+                startActivity(new Intent(MainActivity.this, SingleMeal2Activity.class));
             }
         });
 
@@ -63,8 +74,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadCardBackground() {
         RelativeLayout card1background = findViewById(R.id.card1background);
+        RelativeLayout card2background = findViewById(R.id.card2background);
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String imgPath = sharedPreferences.getString("meal1_imgPath", "");
+        String imgPath1 = sharedPreferences.getString("meal1_imgPath", "");
+        String imgPath2 = sharedPreferences.getString("meal2_imgPath", "");
+        loadImageFromPath(card1background, imgPath1);
+        loadImageFromPath(card2background, imgPath2);
+    }
+
+    private void loadImageFromPath(RelativeLayout background, String imgPath) {
         if (!imgPath.isEmpty()) {
             try {
                 File f = new File(imgPath, "profile.jpg");
@@ -72,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 if (b != null) {
                     Drawable d = new BitmapDrawable(getResources(), b);
                     d.setColorFilter(getResources().getColor(R.color.darkgray), PorterDuff.Mode.DARKEN);
-                    card1background.setBackground(d);
+                    background.setBackground(d);
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -83,19 +101,33 @@ public class MainActivity extends AppCompatActivity {
     private void loadCardTitle() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String meal1_title = sharedPreferences.getString("meal1_title", "");
-        if (!meal1_title.isEmpty()) {
-            TextView card1text = findViewById(R.id.card1text);
-            card1text.setTextColor(getResources().getColor(R.color.white));
-            card1text.setText(meal1_title.toUpperCase());
+        String meal2_title = sharedPreferences.getString("meal2_title", "");
+        TextView card1text = findViewById(R.id.card1text);
+        TextView card2text = findViewById(R.id.card2text);
+        setTitle(card1text, meal1_title);
+        setTitle(card2text, meal2_title);
+    }
+
+    private void setTitle(TextView view, String text) {
+        if (!text.isEmpty()) {
+            view.setTextColor(getResources().getColor(R.color.white));
+            view.setText(text.toUpperCase());
         }
     }
 
     private void loadCardTime() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String meal1_time = sharedPreferences.getString("meal1_time", "");
-        if (!meal1_time.isEmpty()) {
-            TextView card1time = findViewById(R.id.card1time);
-            card1time.setText(meal1_time);
+        String meal2_time = sharedPreferences.getString("meal2_time", "");
+        TextView card1time = findViewById(R.id.card1time);
+        TextView card2time = findViewById(R.id.card2time);
+        setTime(card1time, meal1_time);
+        setTime(card2time, meal2_time);
+    }
+
+    private void setTime(TextView view, String text) {
+        if (!text.isEmpty()) {
+            view.setText(text);
         }
     }
 
