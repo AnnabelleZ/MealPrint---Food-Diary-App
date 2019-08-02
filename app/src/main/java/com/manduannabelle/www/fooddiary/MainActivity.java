@@ -1,5 +1,6 @@
 package com.manduannabelle.www.fooddiary;
 
+import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,6 +8,7 @@ import android.graphics.Matrix;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -14,34 +16,41 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.util.Calendar;
 import android.content.Intent;
-
+import com.android.LiteCycle;
 import org.w3c.dom.Text;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String EXTRA_DATE = "com.manduannabelle.www.fooddiary.EXTRA_DATE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // for the date on the toolbar
-        Calendar calendar = Calendar.getInstance();
-        String currentDate = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.getTime());
+        ImageButton imgButton = (ImageButton) findViewById(R.id.toolbar_calendar);
+        imgButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "date picker");
+            }
+        });
 
-        TextView textViewDate = findViewById(R.id.text_view_date);
-        textViewDate.setText(currentDate);
+        // for the date on the toolbar
+        loadDate();
 
         // for tool bar to show
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
@@ -78,7 +87,55 @@ public class MainActivity extends AppCompatActivity {
         loadCardBackground();
         loadCardTitle();
         loadCardTime();
+        onCloseSetDefaultDate();
     }
+
+    public void onCloseSetDefaultDate() {
+        Calendar c = Calendar.getInstance();
+        LiteCycle.with(DateFormat.getDateInstance().format(c.getTime()))
+                .forLifeCycle(this) // pass Activity or Fragment
+                .onStopUpdate(i -> saveDate(i));
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        String currentDateString = DateFormat.getDateInstance().format(calendar.getTime());
+
+        TextView date = (TextView) findViewById(R.id.text_view_date);
+        date.setText(currentDateString);
+        saveDate(currentDateString);
+    }
+
+    public String saveDate(String currentDate) {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString("current_date", currentDate);
+        editor.apply();
+        return currentDate;
+    }
+
+    public void loadDate() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = sharedPreferences.getString("current_date", DateFormat.getDateInstance().format(calendar.getTime()));
+        TextView textViewDate = findViewById(R.id.text_view_date);
+        textViewDate.setText(currentDate);
+    }
+        /*sendDateToSingleMealViews(SingleMeal1Activity.class, currentDateString);
+        sendDateToSingleMealViews(SingleMeal2Activity.class, currentDateString);
+        sendDateToSingleMealViews(SingleMeal3Activity.class, currentDateString);
+    }
+
+    public void sendDateToSingleMealViews(Class singleMeal, String currentDate) {
+        Intent intent = new Intent(this, singleMeal);
+        intent.putExtra(EXTRA_DATE, currentDate);
+    }*/
 
     private void loadCardBackground() {
         RelativeLayout card1background = findViewById(R.id.card1background);

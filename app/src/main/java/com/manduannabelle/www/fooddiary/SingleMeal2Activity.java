@@ -59,9 +59,10 @@ public class SingleMeal2Activity extends AppCompatActivity {
         editNote = findViewById(R.id.meal2_note);
 
         // for the date on the toolbar
-        Calendar calendar = Calendar.getInstance();
-        String currentDate = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.getTime());
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = sharedPreferences.getString("current_date", DateFormat.getDateInstance().format(calendar.getTime()));
         TextView textViewDate = findViewById(R.id.text_view_date);
         textViewDate.setText(currentDate);
 
