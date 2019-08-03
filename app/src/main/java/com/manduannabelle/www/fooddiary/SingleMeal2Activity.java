@@ -34,7 +34,7 @@ import java.util.Locale;
 
 import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
 
-public class SingleMeal2Activity extends AppCompatActivity {
+public class SingleMeal2Activity extends UtilityActivity {
     public static final String EXTRA_PATH = "com.manduannabelle.www.fooddiary.EXTRA_PATH";
     public static final String EXTRA_TEXT = "com.manduannabelle.www.fooddiary.EXTRA_TEXT";
     public static final String SHARED_PREFS = "sharedPrefs";
@@ -54,6 +54,9 @@ public class SingleMeal2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.singlemeal2);
+
+        // to support hiding the keyboard when clicked outside
+        setupUI(findViewById(R.id.meal2));
 
         editTitle = findViewById(R.id.meal2_title);
         editNote = findViewById(R.id.meal2_note);

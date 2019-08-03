@@ -17,9 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SingleMeal1Activity"/>
-        <activity android:name=".SingleMeal2Activity"/>
-        <activity android:name=".SingleMeal3Activity"/>
+        <activity android:name=".SingleMeal1Activity"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".SingleMeal2Activity"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".SingleMeal3Activity"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>

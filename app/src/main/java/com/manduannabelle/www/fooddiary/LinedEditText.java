@@ -1,10 +1,14 @@
 package com.manduannabelle.www.fooddiary;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.EditText;
 
 /* code from https://stackoverflow.com/questions/10992411/how-to-add-pagelines-to-a-edittext-in-android */
 public class LinedEditText extends android.support.v7.widget.AppCompatEditText
@@ -28,7 +32,7 @@ public class LinedEditText extends android.support.v7.widget.AppCompatEditText
     @Override
     protected void onDraw(Canvas canvas)
     {
-        int height = canvas.getHeight();
+        int height = getHeight();
         int curHeight = 0;
         Rect r = mRect;
         Paint paint = mPaint;
