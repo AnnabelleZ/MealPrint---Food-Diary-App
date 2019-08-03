@@ -33,7 +33,6 @@ import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String EXTRA_DATE = "com.manduannabelle.www.fooddiary.EXTRA_DATE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +49,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         });
 
         // for the date on the toolbar
+        // reset the selected day in the SharedPreferences to the current date
+        Calendar calendar = Calendar.getInstance();
+        saveDate(DateFormat.getDateInstance().format(calendar.getTime()));
+        // load selected day
         loadDate();
 
         // for tool bar to show
@@ -83,17 +86,17 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             }
         });
 
-
         loadCardBackground();
         loadCardTitle();
         loadCardTime();
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        Calendar calendar = Calendar.getInstance();
-        saveDate(DateFormat.getDateInstance().format(calendar.getTime()));
+    protected void onResume() {
+        super.onResume();
+        loadCardBackground();
+        loadCardTitle();
+        loadCardTime();
     }
 
     @Override
@@ -114,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString("current_date", currentDate);
-        editor.apply();
+        editor.commit();
     }
 
     public void loadDate() {
@@ -125,15 +128,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         TextView textViewDate = findViewById(R.id.text_view_date);
         textViewDate.setText(currentDate);
     }
-        /*sendDateToSingleMealViews(SingleMeal1Activity.class, currentDateString);
-        sendDateToSingleMealViews(SingleMeal2Activity.class, currentDateString);
-        sendDateToSingleMealViews(SingleMeal3Activity.class, currentDateString);
-    }
-
-    public void sendDateToSingleMealViews(Class singleMeal, String currentDate) {
-        Intent intent = new Intent(this, singleMeal);
-        intent.putExtra(EXTRA_DATE, currentDate);
-    }*/
 
     private void loadCardBackground() {
         ImageView card1background = findViewById(R.id.card1background);

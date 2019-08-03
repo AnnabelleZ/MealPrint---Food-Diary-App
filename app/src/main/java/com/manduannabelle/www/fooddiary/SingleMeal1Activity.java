@@ -84,13 +84,6 @@ public class SingleMeal1Activity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Calendar calendar = Calendar.getInstance();
-        saveDate(DateFormat.getDateInstance().format(calendar.getTime()));
-    }
-
     public void saveDate(String currentDate) {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -153,7 +146,7 @@ public class SingleMeal1Activity extends AppCompatActivity {
         loadData();
 
         // switch from SingleMeal1Activity to MainActivity
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra(EXTRA_TEXT, meal1_title);
 
         intent.putExtra(EXTRA_PATH, imgPath);
