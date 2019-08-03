@@ -87,6 +87,21 @@ public class SingleMeal3Activity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Calendar calendar = Calendar.getInstance();
+        saveDate(DateFormat.getDateInstance().format(calendar.getTime()));
+    }
+
+    public void saveDate(String currentDate) {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString("current_date", currentDate);
+        editor.apply();
+    }
+
     public void setMealTime() {
         time.setOnClickListener(new View.OnClickListener() {
             int currentHour;

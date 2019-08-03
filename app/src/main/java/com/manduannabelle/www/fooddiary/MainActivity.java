@@ -28,8 +28,6 @@ import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.util.Calendar;
 import android.content.Intent;
-import com.android.LiteCycle;
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     public static final String SHARED_PREFS = "sharedPrefs";
@@ -87,14 +85,13 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         loadCardBackground();
         loadCardTitle();
         loadCardTime();
-        onCloseSetDefaultDate();
     }
 
-    public void onCloseSetDefaultDate() {
-        Calendar c = Calendar.getInstance();
-        LiteCycle.with(DateFormat.getDateInstance().format(c.getTime()))
-                .forLifeCycle(this) // pass Activity or Fragment
-                .onStopUpdate(i -> saveDate(i));
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Calendar calendar = Calendar.getInstance();
+        saveDate(DateFormat.getDateInstance().format(calendar.getTime()));
     }
 
     @Override
@@ -110,13 +107,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         saveDate(currentDateString);
     }
 
-    public String saveDate(String currentDate) {
+    public void saveDate(String currentDate) {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString("current_date", currentDate);
         editor.apply();
-        return currentDate;
     }
 
     public void loadDate() {

@@ -62,7 +62,7 @@ public class SingleMeal1Activity extends AppCompatActivity {
         String currentDate = sharedPreferences.getString("current_date", DateFormat.getDateInstance().format(calendar.getTime()));
         TextView textViewDate = findViewById(R.id.text_view_date);
         textViewDate.setText(currentDate);
-        
+
         meal1image = findViewById(R.id.meal1_image);
         time = findViewById(R.id.meal1_time);
         loadImageIndicator();
@@ -82,6 +82,21 @@ public class SingleMeal1Activity extends AppCompatActivity {
         if (imgSet) {
             time.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Calendar calendar = Calendar.getInstance();
+        saveDate(DateFormat.getDateInstance().format(calendar.getTime()));
+    }
+
+    public void saveDate(String currentDate) {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString("current_date", currentDate);
+        editor.apply();
     }
 
     public void setMealTime() {
