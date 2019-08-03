@@ -124,7 +124,7 @@ public class SingleMeal1Activity extends AppCompatActivity {
         editor.putString("meal1_title", editTitle.getText().toString());
         editor.putString("meal1_note", editNote.getText().toString());
         if (selectedImage != null)
-            editor.putString("meal1_imgPath", imgManager.saveImageToInternalStorage(ImageManager.rotateBitmap(selectedImage), 1));
+            editor.putString("meal1_imgPath", imgManager.saveImageToInternalStorage(selectedImage, 1));
         editor.putString("meal1_time", time.getText().toString());
 
         editor.apply();
@@ -192,7 +192,7 @@ public class SingleMeal1Activity extends AppCompatActivity {
         if (requestCode == 1213 && resultCode == Activity.RESULT_OK) {
             String filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
             selectedImage = BitmapFactory.decodeFile(filePath);
-            meal1image.setImageBitmap(ImageManager.rotateBitmap(selectedImage));
+            meal1image.setImageBitmap(selectedImage);
             TimeManager.setDefaultTime(time);
             time.setVisibility(View.VISIBLE);
             imgSet = true;

@@ -53,6 +53,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"-->
                 android:inputType="text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLength="20"
                 android:textColor="@color/colorAccent"
                 android:layout_gravity="center_horizontal"
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -63,9 +64,10 @@ xmlns:app="http://schemas.android.com/apk/res-auto"-->
 
             <EditText
                 android:id="@+id/meal2_note"
-                android:inputType="textAutoCorrect"
+                android:inputType="textMultiLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLines="20"
                 android:textColor="@color/colorAccent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:hint="@string/note"

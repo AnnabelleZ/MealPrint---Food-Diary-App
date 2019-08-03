@@ -8,7 +8,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
@@ -41,6 +46,18 @@ public class ImageManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("meal" + meal + "_imgSet", imgSet);
         editor.apply();
+    }
+
+    public static Bitmap darkenBitMap(Bitmap bm) {
+
+        Canvas canvas = new Canvas(bm);
+        Paint p = new Paint(Color.RED);
+        //ColorFilter filter = new LightingColorFilter(0xFFFFFFFF , 0x00222222); // lighten
+        ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);    // darken
+        p.setColorFilter(filter);
+        canvas.drawBitmap(bm, new Matrix(), p);
+
+        return bm;
     }
 
     public String saveImageToInternalStorage(Bitmap bitmapImage, int meal) {

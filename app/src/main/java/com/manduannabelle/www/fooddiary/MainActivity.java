@@ -8,6 +8,7 @@ import android.graphics.Matrix;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -134,9 +136,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }*/
 
     private void loadCardBackground() {
-        RelativeLayout card1background = findViewById(R.id.card1background);
-        RelativeLayout card2background = findViewById(R.id.card2background);
-        RelativeLayout card3background = findViewById(R.id.card3background);
+        ImageView card1background = findViewById(R.id.card1background);
+        ImageView card2background = findViewById(R.id.card2background);
+        ImageView card3background = findViewById(R.id.card3background);
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String imgPath1 = sharedPreferences.getString("meal1_imgPath", "");
         String imgPath2 = sharedPreferences.getString("meal2_imgPath", "");
@@ -146,15 +148,17 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         loadImageFromPath(card3background, imgPath3, "meal3.jpg");
     }
 
-    private void loadImageFromPath(RelativeLayout background, String imgPath, String name) {
+    private void loadImageFromPath(ImageView background, String imgPath, String name) {
         if (!imgPath.isEmpty()) {
             try {
                 File f = new File(imgPath, name);
                 Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
                 if (b != null) {
-                    Drawable d = new BitmapDrawable(getResources(), b);
-                    d.setColorFilter(getResources().getColor(R.color.darkgray), PorterDuff.Mode.DARKEN);
-                    background.setBackground(d);
+                    //Drawable d = new BitmapDrawable(getResources(), b);
+                    //d.setColorFilter(getResources().getColor(R.color.darkgray), PorterDuff.Mode.DARKEN);
+                    //background.setBackground(d);
+                    Bitmap mutable = b.copy(Bitmap.Config.ARGB_8888, true);
+                    background.setImageBitmap(ImageManager.darkenBitMap(mutable));
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

@@ -25,10 +25,15 @@
             android:focusable="true">
 
             <RelativeLayout
-                android:id="@+id/card1background"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/card1background"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
 
                 <TextView
                     android:id="@+id/card1text"
@@ -66,10 +71,15 @@
             android:layout_height="150dp">
 
             <RelativeLayout
-                android:id="@+id/card2background"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/card2background"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
 
                 <TextView
                     android:id="@+id/card2text"
@@ -107,10 +117,15 @@
             android:layout_height="150dp">
 
             <RelativeLayout
-                android:id="@+id/card3background"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/card3background"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
 
                 <TextView
                     android:id="@+id/card3text"
@@ -147,12 +162,12 @@
             android:layout_height="150dp">
 
             <RelativeLayout
-                android:id="@+id/card4background"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/card4background"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
