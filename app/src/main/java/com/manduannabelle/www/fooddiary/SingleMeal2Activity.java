@@ -220,6 +220,13 @@ public class SingleMeal2Activity extends AppCompatActivity {
             public void onClick(View view) {
                 imgSet = false;
                 imgManager.saveImageIndicator(2, imgSet);
+                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("meal2_imgPath", null);
+                selectedImage = null;
+                editor.apply();
+                imgPath = sharedPreferences.getString("meal2_imgPath", "");
+                meal2image.setImageResource(android.R.color.transparent);
                 takePhoto();
             }
         });

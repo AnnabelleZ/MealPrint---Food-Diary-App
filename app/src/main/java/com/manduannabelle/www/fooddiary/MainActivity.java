@@ -92,8 +92,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onRestart() {
+        super.onRestart();
         loadCardBackground();
         loadCardTitle();
         loadCardTime();
@@ -148,15 +148,14 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 File f = new File(imgPath, name);
                 Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
                 if (b != null) {
-                    //Drawable d = new BitmapDrawable(getResources(), b);
-                    //d.setColorFilter(getResources().getColor(R.color.darkgray), PorterDuff.Mode.DARKEN);
-                    //background.setBackground(d);
                     Bitmap mutable = b.copy(Bitmap.Config.ARGB_8888, true);
                     background.setImageBitmap(ImageManager.darkenBitMap(mutable));
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+        } else {
+            background.setImageResource(android.R.color.transparent);
         }
     }
 

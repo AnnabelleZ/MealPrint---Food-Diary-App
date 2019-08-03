@@ -62,7 +62,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"-->
                 android:hint="@string/meal3title"
                 android:background="@android:color/transparent"/>
 
-            <EditText
+            <com.manduannabelle.www.fooddiary.LinedEditText
                 android:id="@+id/meal3_note"
                 android:inputType="textMultiLine"
                 android:layout_width="match_parent"
@@ -71,7 +71,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"-->
                 android:textColor="@color/colorAccent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:hint="@string/note"
-                android:backgroundTint="@color/colorDashboardDeep"
+                android:background="@android:color/transparent"
                 />
         </LinearLayout>
 

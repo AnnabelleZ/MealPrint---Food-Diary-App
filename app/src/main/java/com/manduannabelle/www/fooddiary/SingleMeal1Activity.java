@@ -173,6 +173,13 @@ public class SingleMeal1Activity extends AppCompatActivity {
             public void onClick(View view) {
                 imgSet = false;
                 imgManager.saveImageIndicator(1, imgSet);
+                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("meal1_imgPath", null);
+                selectedImage = null;
+                editor.apply();
+                imgPath = sharedPreferences.getString("meal1_imgPath", "");
+                meal1image.setImageResource(android.R.color.transparent);
                 takePhoto();
             }
         });
