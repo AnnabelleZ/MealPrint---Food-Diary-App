@@ -62,22 +62,23 @@ public class SingleMeal3Activity extends UtilityActivity{
 
         editTitle = findViewById(R.id.meal3_title);
         editNote = findViewById(R.id.meal3_note);
+        meal3image = findViewById(R.id.meal3_image);
+        time = findViewById(R.id.meal3_time);
 
         // for the date on the toolbar
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-
         Calendar calendar = Calendar.getInstance();
         currentDate = sharedPreferences.getString("current_date", TimeManager.dateFormatter(calendar));
         TextView textViewDate = findViewById(R.id.text_view_date);
         textViewDate.setText(currentDate);
 
-        meal3image = findViewById(R.id.meal3_image);
-        time = findViewById(R.id.meal3_time);
+        TimeManager.setDefaultTime(time);
         loadImageIndicator();
         loadData();
         updateViews();
         takePhoto();
         retake();
+
         // go back
         ImageButton backButton = findViewById(R.id.toolbar_back);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +88,6 @@ public class SingleMeal3Activity extends UtilityActivity{
             }
         });
         setMealTime();
-        TimeManager.setDefaultTime(time);
     }
 
     public void saveDate(String currentDate) {
