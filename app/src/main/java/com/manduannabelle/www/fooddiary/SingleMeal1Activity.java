@@ -86,6 +86,7 @@ public class SingleMeal1Activity extends UtilityActivity{
         });
         setMealTime();
         TimeManager.setDefaultTime(time);
+        Toast.makeText(this, "img set: " + imgSet.toString(), Toast.LENGTH_SHORT).show();
     }
 
     public void saveDate(String currentDate) {
@@ -209,6 +210,7 @@ public class SingleMeal1Activity extends UtilityActivity{
             imgSet = true;
             imgManager.saveImageIndicator(1, imgSet, currentDate);
             savePhoto();
+            Toast.makeText(this, "img set: " + imgSet.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 

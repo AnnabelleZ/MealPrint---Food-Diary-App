@@ -44,7 +44,7 @@ public class ImageManager {
     public void saveImageIndicator(int meal, Boolean imgSet, String currentDate) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(currentDate.replace("/", "_") + "_meal" + meal + "_imgSet", imgSet);
+        editor.putBoolean(currentDate + "_meal" + meal + "_imgSet", imgSet);
         editor.apply();
     }
 
