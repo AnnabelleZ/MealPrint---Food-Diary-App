@@ -2,9 +2,13 @@
 <TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/text_view_date"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center"
+    android:gravity="center_vertical"
+    android:layout_marginRight="?attr/actionBarSize"
+    android:layout_marginLeft="?attr/actionBarSize"
     android:text="@string/app_name"
     android:textSize="25sp"
-    android:textColor="@color/white" />
+    android:textColor="@color/white"/>
