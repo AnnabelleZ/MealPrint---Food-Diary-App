@@ -21,7 +21,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+
 import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
@@ -45,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         // for the date on the toolbar
         // reset the selected day in the SharedPreferences to the current date
         Calendar calendar = Calendar.getInstance();
-        saveDate(DateFormat.getDateInstance().format(calendar.getTime()));
+        saveDate(TimeManager.dateFormatter(calendar));
         // load selected day
         loadDate();
 
@@ -99,7 +102,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        String currentDateString = DateFormat.getDateInstance().format(calendar.getTime());
+
+        String currentDateString = TimeManager.dateFormatter(calendar);
 
         TextView date = (TextView) findViewById(R.id.text_view_date);
         date.setText(currentDateString);
@@ -124,7 +128,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 
         Calendar calendar = Calendar.getInstance();
-        currentDate = sharedPreferences.getString("current_date", DateFormat.getDateInstance().format(calendar.getTime()));
+        currentDate = sharedPreferences.getString("current_date", TimeManager.dateFormatter(calendar));
+
         TextView textViewDate = findViewById(R.id.text_view_date);
         textViewDate.setText(currentDate);
     }
@@ -137,9 +142,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         String imgPath1 = sharedPreferences.getString(currentDate + "_meal1_imgPath", "");
         String imgPath2 = sharedPreferences.getString(currentDate + "_meal2_imgPath", "");
         String imgPath3 = sharedPreferences.getString(currentDate + "_meal3_imgPath", "");
-        loadImageFromPath(card1background, imgPath1, currentDate + "_meal1.jpg");
-        loadImageFromPath(card2background, imgPath2, currentDate + "_meal2.jpg");
-        loadImageFromPath(card3background, imgPath3, currentDate + "_meal3.jpg");
+        loadImageFromPath(card1background, imgPath1, currentDate.replace("/", "_") + "_meal1.jpg");
+        loadImageFromPath(card2background, imgPath2, currentDate.replace("/", "_") + "_meal2.jpg");
+        loadImageFromPath(card3background, imgPath3, currentDate.replace("/", "_") + "_meal3.jpg");
     }
 
     private void loadImageFromPath(ImageView background, String imgPath, String name) {

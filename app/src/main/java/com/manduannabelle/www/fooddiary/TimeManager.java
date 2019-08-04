@@ -5,6 +5,8 @@ import android.app.TimePickerDialog;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -41,5 +43,13 @@ public class TimeManager {
             }
         }, currentHour, currentMinute, false);
         timePickerDialog.show();
+    }
+
+    protected static String dateFormatter(Calendar calendar) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E");
+        String dayOfWeek = simpleDateFormat.format(calendar.getTime());
+        String unformattedDate = DateFormat.getDateInstance(DateFormat.SHORT).format(calendar.getTime());
+        String formattedDate = dayOfWeek + " " + unformattedDate.substring(0, unformattedDate.length() - 3);
+        return formattedDate;
     }
 }

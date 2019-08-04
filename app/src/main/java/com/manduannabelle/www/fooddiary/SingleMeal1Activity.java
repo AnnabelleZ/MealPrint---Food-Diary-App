@@ -27,6 +27,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
@@ -63,7 +64,8 @@ public class SingleMeal1Activity extends UtilityActivity{
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 
         Calendar calendar = Calendar.getInstance();
-        currentDate = sharedPreferences.getString("current_date", DateFormat.getDateInstance().format(calendar.getTime()));
+
+        currentDate = sharedPreferences.getString("current_date", TimeManager.dateFormatter(calendar));
         TextView textViewDate = findViewById(R.id.text_view_date);
         textViewDate.setText(currentDate);
 
