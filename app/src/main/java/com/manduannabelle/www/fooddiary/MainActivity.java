@@ -26,6 +26,7 @@ import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     public static final String SHARED_PREFS = "sharedPrefs";
+    String currentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,14 +103,20 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
         TextView date = (TextView) findViewById(R.id.text_view_date);
         date.setText(currentDateString);
+        currentDate = currentDateString;
         saveDate(currentDateString);
+        Toast.makeText(this, currentDate, Toast.LENGTH_SHORT).show();
+        // reload the page
+        loadCardBackground();
+        loadCardTitle();
+        loadCardTime();
     }
 
-    public void saveDate(String currentDate) {
+    public void saveDate(String currentDateString) {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putString("current_date", currentDate);
+        editor.putString("current_date", currentDateString);
         editor.commit();
     }
 
@@ -117,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 
         Calendar calendar = Calendar.getInstance();
-        String currentDate = sharedPreferences.getString("current_date", DateFormat.getDateInstance().format(calendar.getTime()));
+        currentDate = sharedPreferences.getString("current_date", DateFormat.getDateInstance().format(calendar.getTime()));
         TextView textViewDate = findViewById(R.id.text_view_date);
         textViewDate.setText(currentDate);
     }
@@ -127,12 +134,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         ImageView card2background = findViewById(R.id.card2background);
         ImageView card3background = findViewById(R.id.card3background);
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String imgPath1 = sharedPreferences.getString("meal1_imgPath", "");
-        String imgPath2 = sharedPreferences.getString("meal2_imgPath", "");
-        String imgPath3 = sharedPreferences.getString("meal3_imgPath", "");
-        loadImageFromPath(card1background, imgPath1, "meal1.jpg");
-        loadImageFromPath(card2background, imgPath2, "meal2.jpg");
-        loadImageFromPath(card3background, imgPath3, "meal3.jpg");
+        String imgPath1 = sharedPreferences.getString(currentDate + "_meal1_imgPath", "");
+        String imgPath2 = sharedPreferences.getString(currentDate + "_meal2_imgPath", "");
+        String imgPath3 = sharedPreferences.getString(currentDate + "_meal3_imgPath", "");
+        loadImageFromPath(card1background, imgPath1, currentDate + "_meal1.jpg");
+        loadImageFromPath(card2background, imgPath2, currentDate + "_meal2.jpg");
+        loadImageFromPath(card3background, imgPath3, currentDate + "_meal3.jpg");
     }
 
     private void loadImageFromPath(ImageView background, String imgPath, String name) {
@@ -154,29 +161,32 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     private void loadCardTitle() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String meal1_title = sharedPreferences.getString("meal1_title", "");
-        String meal2_title = sharedPreferences.getString("meal2_title", "");
-        String meal3_title = sharedPreferences.getString("meal3_title", "");
+        String meal1_title = sharedPreferences.getString(currentDate + "_meal1_title", "");
+        String meal2_title = sharedPreferences.getString(currentDate + "_meal2_title", "");
+        String meal3_title = sharedPreferences.getString(currentDate + "_meal3_title", "");
         TextView card1text = findViewById(R.id.card1text);
         TextView card2text = findViewById(R.id.card2text);
         TextView card3text = findViewById(R.id.card3text);
-        setTitle(card1text, meal1_title);
-        setTitle(card2text, meal2_title);
-        setTitle(card3text, meal3_title);
+        setTitle(card1text, meal1_title, getResources().getString(R.string.breakfast));
+        setTitle(card2text, meal2_title, getResources().getString(R.string.lunch));
+        setTitle(card3text, meal3_title, getResources().getString(R.string.dinner));
     }
 
-    private void setTitle(TextView view, String text) {
+    private void setTitle(TextView view, String text, String hint) {
         if (!text.isEmpty()) {
             view.setTextColor(getResources().getColor(R.color.white));
             view.setText(text.toUpperCase());
+        } else {
+            view.setTextColor(getResources().getColor(R.color.colorDashboardDeep));
+            view.setText(hint);
         }
     }
 
     private void loadCardTime() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String meal1_time = sharedPreferences.getString("meal1_time", "");
-        String meal2_time = sharedPreferences.getString("meal2_time", "");
-        String meal3_time = sharedPreferences.getString("meal3_time", "");
+        String meal1_time = sharedPreferences.getString(currentDate + "_meal1_time", "");
+        String meal2_time = sharedPreferences.getString(currentDate + "_meal2_time", "");
+        String meal3_time = sharedPreferences.getString(currentDate + "_meal3_time", "");
         TextView card1time = findViewById(R.id.card1time);
         TextView card2time = findViewById(R.id.card2time);
         TextView card3time = findViewById(R.id.card3time);
@@ -188,6 +198,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     private void setTime(TextView view, String text) {
         if (!text.isEmpty()) {
             view.setText(text);
+        } else {
+            view.setText("");
         }
     }
 

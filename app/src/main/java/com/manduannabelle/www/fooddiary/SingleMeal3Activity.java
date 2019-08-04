@@ -49,6 +49,7 @@ public class SingleMeal3Activity extends UtilityActivity{
     private TextView time;
     private String meal3_time;
     ImageManager imgManager = new ImageManager(SingleMeal3Activity.this);
+    String currentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class SingleMeal3Activity extends UtilityActivity{
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 
         Calendar calendar = Calendar.getInstance();
-        String currentDate = sharedPreferences.getString("current_date", DateFormat.getDateInstance().format(calendar.getTime()));
+        currentDate = sharedPreferences.getString("current_date", DateFormat.getDateInstance().format(calendar.getTime()));
         TextView textViewDate = findViewById(R.id.text_view_date);
         textViewDate.setText(currentDate);
 
@@ -85,9 +86,7 @@ public class SingleMeal3Activity extends UtilityActivity{
             }
         });
         setMealTime();
-        if (imgSet) {
-            time.setVisibility(View.VISIBLE);
-        }
+        TimeManager.setDefaultTime(time);
     }
 
     public void saveDate(String currentDate) {
@@ -110,16 +109,9 @@ public class SingleMeal3Activity extends UtilityActivity{
         });
     }
 
-    /*public void saveImageIndicator() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("meal3_imgSet", imgSet);
-        editor.apply();
-    }*/
-
     public void loadImageIndicator() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        imgSet = sharedPreferences.getBoolean("meal3_imgSet", false);
+        imgSet = sharedPreferences.getBoolean(currentDate + "_meal3_imgSet", false);
     }
 
     public void saveData() {
@@ -127,69 +119,40 @@ public class SingleMeal3Activity extends UtilityActivity{
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         // save data
-        editor.putString("meal3_title", editTitle.getText().toString());
-        editor.putString("meal3_note", editNote.getText().toString());
-        if (selectedImage != null)
-            editor.putString("meal3_imgPath", imgManager.saveImageToInternalStorage(selectedImage, 3));
-        editor.putString("meal3_time", time.getText().toString());
+        editor.putString(currentDate + "_meal3_title", editTitle.getText().toString());
+        editor.putString(currentDate + "_meal3_note", editNote.getText().toString());
+        editor.putString(currentDate + "_meal3_time", time.getText().toString());
 
         editor.apply();
 
         Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
     }
 
+    public void savePhoto() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (selectedImage != null)
+            editor.putString(currentDate + "_meal3_imgPath", imgManager.saveImageToInternalStorage(selectedImage, 3, currentDate));
+        editor.apply();
+
+        Toast.makeText(this, "Photo saved", Toast.LENGTH_SHORT).show();
+    }
+
     public void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        meal3_title = sharedPreferences.getString("meal3_title", "Dinner");
-        meal3_note = sharedPreferences.getString("meal3_note", "");
-        imgPath = sharedPreferences.getString("meal3_imgPath", "");
-        meal3_time = sharedPreferences.getString("meal3_time", "");
+        meal3_title = sharedPreferences.getString(currentDate + "_meal3_title", "Dinner");
+        meal3_note = sharedPreferences.getString(currentDate + "_meal3_note", "");
+        imgPath = sharedPreferences.getString(currentDate + "_meal3_imgPath", "");
+        meal3_time = sharedPreferences.getString(currentDate + "_meal3_time", "");
     }
 
     public void updateViews() {
         editTitle.setText(meal3_title);
         editNote.setText(meal3_note);
         if (imgSet)
-            imgManager.loadImageFromStorage(imgPath, 3, meal3image);
+            imgManager.loadImageFromStorage(imgPath, 3, meal3image, currentDate);
         time.setText(meal3_time);
     }
-
-
-    /*private String saveImageToInternalStorage(Bitmap bitmapImage) {
-        ContextWrapper cw = new ContextWrapper(getApplicationContext());
-        // path to /data/data/FoodDiary/app_data/imageDir
-        File dir = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        // Create imageDir
-        File myPath = new File(dir, "meal3.jpg");
-
-        FileOutputStream fos = null;
-
-        try {
-            fos = new FileOutputStream(myPath);
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fos != null)
-                    fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return dir.getAbsolutePath();
-    }
-
-    private void loadImageFromStorage(String path) {
-        try {
-            File f = new File(path, "meal3.jpg");
-            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-            if (b != null)
-                meal3image.setImageBitmap(b);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    } */
 
     public void backToMain() {
         saveData();
@@ -223,13 +186,13 @@ public class SingleMeal3Activity extends UtilityActivity{
             @Override
             public void onClick(View view) {
                 imgSet = false;
-                imgManager.saveImageIndicator(3, imgSet);
+                imgManager.saveImageIndicator(3, imgSet, currentDate);
                 SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("meal3_imgPath", null);
+                editor.putString(currentDate + "_meal3_imgPath", null);
                 selectedImage = null;
                 editor.apply();
-                imgPath = sharedPreferences.getString("meal3_imgPath", "");
+                imgPath = sharedPreferences.getString(currentDate + "_meal3_imgPath", "");
                 meal3image.setImageResource(android.R.color.transparent);
                 takePhoto();
             }
@@ -245,9 +208,15 @@ public class SingleMeal3Activity extends UtilityActivity{
             selectedImage = BitmapFactory.decodeFile(filePath);
             meal3image.setImageBitmap(selectedImage);
             TimeManager.setDefaultTime(time);
-            time.setVisibility(View.VISIBLE);
             imgSet = true;
-            imgManager.saveImageIndicator(3, imgSet);
+            imgManager.saveImageIndicator(3, imgSet, currentDate);
+            savePhoto();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveData();
     }
 }

@@ -41,10 +41,10 @@ public class ImageManager {
         this.context = context;
     }
 
-    public void saveImageIndicator(int meal, Boolean imgSet) {
+    public void saveImageIndicator(int meal, Boolean imgSet, String currentDate) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("meal" + meal + "_imgSet", imgSet);
+        editor.putBoolean(currentDate + "_meal" + meal + "_imgSet", imgSet);
         editor.apply();
     }
 
@@ -60,12 +60,12 @@ public class ImageManager {
         return bm;
     }
 
-    public String saveImageToInternalStorage(Bitmap bitmapImage, int meal) {
+    public String saveImageToInternalStorage(Bitmap bitmapImage, int meal, String currentDate) {
         ContextWrapper cw = new ContextWrapper(context.getApplicationContext());
         // path to /data/data/FoodDiary/app_data/imageDir
         File dir = cw.getDir("imageDir", Context.MODE_PRIVATE);
         // Create imageDir
-        File myPath = new File(dir, "meal" + meal +".jpg");
+        File myPath = new File(dir, currentDate + "_meal" + meal +".jpg");
 
         FileOutputStream fos = null;
 
@@ -85,9 +85,9 @@ public class ImageManager {
         return dir.getAbsolutePath();
     }
 
-    protected void loadImageFromStorage(String path, int meal, ImageView meal1image) {
+    protected void loadImageFromStorage(String path, int meal, ImageView meal1image, String currentDate) {
         try {
-            File f = new File(path, "meal" + meal + ".jpg");
+            File f = new File(path, currentDate + "_meal" + meal + ".jpg");
             Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
             if (b != null)
                 meal1image.setImageBitmap(b);

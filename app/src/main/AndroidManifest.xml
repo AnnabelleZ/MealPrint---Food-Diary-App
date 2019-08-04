@@ -18,11 +18,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".SingleMeal1Activity"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".SingleMeal2Activity"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".SingleMeal3Activity"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>
