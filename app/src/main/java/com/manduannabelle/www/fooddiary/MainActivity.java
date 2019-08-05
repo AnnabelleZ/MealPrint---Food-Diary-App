@@ -4,7 +4,11 @@ import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -30,6 +34,7 @@ import android.content.Intent;
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     public static final String SHARED_PREFS = "sharedPrefs";
     String currentDate;
+    Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
         // for the date on the toolbar
         // reset the selected day in the SharedPreferences to the current date
-        Calendar calendar = Calendar.getInstance();
+        calendar = Calendar.getInstance();
         saveDate(TimeManager.dateFormatter(calendar));
         // load selected day
         loadDate();
@@ -86,6 +91,42 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         loadCardBackground();
         loadCardTitle();
         loadCardTime();
+
+        ImageButton yesterday = findViewById(R.id.toolbar_nav_left);
+        yesterday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToYesterday(yesterday);
+            }
+        });
+        ImageButton tomorrow = findViewById(R.id.toolbar_nav_right);
+        tomorrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToTomorrow(tomorrow);
+            }
+        });
+        updateRightButtonColor();
+    }
+
+    public void updateLeftButtonColor() {
+        ImageButton yesterday = findViewById(R.id.toolbar_nav_left);
+        if (!dateAfterMinDate(calendar.getTime())) {
+            // set < button to gray
+            yesterday.setImageResource(R.drawable.ic_chevron_left_gray);
+        } else {
+            yesterday.setImageResource(R.drawable.ic_chevron_left_white);
+        }
+    }
+
+    public void updateRightButtonColor() {
+        ImageButton tomorrow = findViewById(R.id.toolbar_nav_right);
+        if (!dateBeforeMaxDate(calendar.getTime())) {
+            // set > button to gray
+            tomorrow.setImageResource(R.drawable.ic_chevron_right_gray);
+        } else {
+            tomorrow.setImageResource(R.drawable.ic_chevron_right_white);
+        }
     }
 
     @Override
@@ -96,13 +137,38 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         loadCardTime();
     }
 
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
+
+    public void goToYesterday(ImageButton yesterday) {
+        if (dateAfterMinDate(calendar.getTime())) {
+            calendar.add(Calendar.DATE, -1);
+            saveDateStateAndReloadPage();
+        }
+    }
+
+    public Boolean dateAfterMinDate(Date date) {
+        Calendar today = Calendar.getInstance();
+        today.add(Calendar.DATE, -6);
+        Date minDate = today.getTime();
+        return date.after(minDate);
+    }
+
+    public Boolean dateBeforeMaxDate(Date date) {
+        Calendar today = Calendar.getInstance();
+        today.add(Calendar.DATE, -1);
+        Date maxDate = today.getTime();
+        return date.before(maxDate);
+    }
+
+    public void goToTomorrow(ImageButton tomorrow) {
+        if (dateBeforeMaxDate(calendar.getTime())) {
+            calendar.add(Calendar.DATE, 1);
+            saveDateStateAndReloadPage();
+        }
+
+    }
+
+    public void saveDateStateAndReloadPage() {
         String currentDateString = TimeManager.dateFormatter(calendar);
 
         TextView date = (TextView) findViewById(R.id.text_view_date);
@@ -114,6 +180,18 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         loadCardBackground();
         loadCardTitle();
         loadCardTime();
+        updateRightButtonColor();
+        updateLeftButtonColor();
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        saveDateStateAndReloadPage();
     }
 
     public void saveDate(String currentDateString) {
@@ -127,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     public void loadDate() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 
-        Calendar calendar = Calendar.getInstance();
+        calendar = Calendar.getInstance();
         currentDate = sharedPreferences.getString("current_date", TimeManager.dateFormatter(calendar));
 
         TextView textViewDate = findViewById(R.id.text_view_date);
