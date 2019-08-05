@@ -38,8 +38,8 @@
             <ImageButton
                 android:id="@+id/toolbar_nav_left"
                 android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                android:layout_margin="10dp"
+                android:layout_height="35dp"
+                android:layout_margin="5dp"
                 android:layout_toStartOf="@+id/text_view_date"
                 android:layout_centerVertical="true"
                 android:background="@drawable/ic_chevron_left_white" />
@@ -58,10 +58,10 @@
             <ImageButton
                 android:id="@+id/toolbar_nav_right"
                 android:layout_width="wrap_content"
-                android:layout_height="24dp"
+                android:layout_height="35dp"
                 android:layout_toEndOf="@+id/text_view_date"
                 android:layout_centerVertical="true"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
                 android:background="@drawable/ic_chevron_right_white" />
 
         </RelativeLayout>

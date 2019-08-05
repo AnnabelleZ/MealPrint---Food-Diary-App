@@ -23,6 +23,8 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".SingleMeal3Activity"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".SingleMeal4Activity"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

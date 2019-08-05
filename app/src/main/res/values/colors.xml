@@ -3,7 +3,8 @@
     <color name="colorPrimary">#5bbc93</color>
     <color name="colorPrimaryDark">#3c795f</color>
     <color name="colorAccent">#164774</color>
-    <color name="colorDashboard">#f5c851</color>
+    <color name="colorDashboard">#F5c851</color>
+    <color name="colorDashboardPressed">#FFB9913F</color>
     <color name="colorDashboardDeep">#ef823f</color>
     <color name="white">#ffffff</color>
     <color name="gray">#cccccc</color>

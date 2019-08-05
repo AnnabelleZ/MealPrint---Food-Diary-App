@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         CardView card1 = findViewById(R.id.card1);
         CardView card2 = findViewById(R.id.card2);
         CardView card3 = findViewById(R.id.card3);
+        CardView card4 = findViewById(R.id.card4);
 
         card1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,8 +84,15 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         card3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // go to singleMeal2Activity
+                // go to singleMeal3Activity
                 startActivity(new Intent(MainActivity.this, SingleMeal3Activity.class));
+            }
+        });
+        card4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // go to singleMeal4Activity
+                startActivity(new Intent(MainActivity.this, SingleMeal4Activity.class));
             }
         });
 
@@ -113,9 +121,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         ImageButton yesterday = findViewById(R.id.toolbar_nav_left);
         if (!dateAfterMinDate(calendar.getTime())) {
             // set < button to gray
-            yesterday.setImageResource(R.drawable.ic_chevron_left_gray);
+            yesterday.setBackground(getResources().getDrawable(R.drawable.ic_chevron_left_gray));
         } else {
-            yesterday.setImageResource(R.drawable.ic_chevron_left_white);
+            yesterday.setBackground(getResources().getDrawable(R.drawable.ic_chevron_left_white));
         }
     }
 
@@ -123,9 +131,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         ImageButton tomorrow = findViewById(R.id.toolbar_nav_right);
         if (!dateBeforeMaxDate(calendar.getTime())) {
             // set > button to gray
-            tomorrow.setImageResource(R.drawable.ic_chevron_right_gray);
+            tomorrow.setBackground(getResources().getDrawable(R.drawable.ic_chevron_right_gray));
         } else {
-            tomorrow.setImageResource(R.drawable.ic_chevron_right_white);
+            tomorrow.setBackground(getResources().getDrawable(R.drawable.ic_chevron_right_white));
         }
     }
 
@@ -216,13 +224,16 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         ImageView card1background = findViewById(R.id.card1background);
         ImageView card2background = findViewById(R.id.card2background);
         ImageView card3background = findViewById(R.id.card3background);
+        ImageView card4background = findViewById(R.id.card4background);
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String imgPath1 = sharedPreferences.getString(currentDate + "_meal1_imgPath", "");
         String imgPath2 = sharedPreferences.getString(currentDate + "_meal2_imgPath", "");
         String imgPath3 = sharedPreferences.getString(currentDate + "_meal3_imgPath", "");
+        String imgPath4 = sharedPreferences.getString(currentDate + "_meal4_imgPath", "");
         loadImageFromPath(card1background, imgPath1, currentDate.replace("/", "_") + "_meal1.jpg");
         loadImageFromPath(card2background, imgPath2, currentDate.replace("/", "_") + "_meal2.jpg");
         loadImageFromPath(card3background, imgPath3, currentDate.replace("/", "_") + "_meal3.jpg");
+        loadImageFromPath(card4background, imgPath4, currentDate.replace("/", "_") + "_meal4.jpg");
     }
 
     private void loadImageFromPath(ImageView background, String imgPath, String name) {
@@ -247,12 +258,15 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         String meal1_title = sharedPreferences.getString(currentDate + "_meal1_title", "");
         String meal2_title = sharedPreferences.getString(currentDate + "_meal2_title", "");
         String meal3_title = sharedPreferences.getString(currentDate + "_meal3_title", "");
+        String meal4_title = sharedPreferences.getString(currentDate + "_meal4_title", "");
         TextView card1text = findViewById(R.id.card1text);
         TextView card2text = findViewById(R.id.card2text);
         TextView card3text = findViewById(R.id.card3text);
+        TextView card4text = findViewById(R.id.card4text);
         setTitle(card1text, meal1_title, getResources().getString(R.string.breakfast));
         setTitle(card2text, meal2_title, getResources().getString(R.string.lunch));
         setTitle(card3text, meal3_title, getResources().getString(R.string.dinner));
+        setTitle(card4text, meal4_title, getResources().getString(R.string.snack));
     }
 
     private void setTitle(TextView view, String text, String hint) {
@@ -260,7 +274,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             view.setTextColor(getResources().getColor(R.color.white));
             view.setText(text.toUpperCase());
         } else {
-            view.setTextColor(getResources().getColor(R.color.colorDashboardDeep));
+            if (view.getId() != R.id.card4text)
+                view.setTextColor(getResources().getColor(R.color.colorDashboardDeep));
             view.setText(hint);
         }
     }
@@ -270,12 +285,15 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         String meal1_time = sharedPreferences.getString(currentDate + "_meal1_time", "");
         String meal2_time = sharedPreferences.getString(currentDate + "_meal2_time", "");
         String meal3_time = sharedPreferences.getString(currentDate + "_meal3_time", "");
+        String meal4_time = sharedPreferences.getString(currentDate + "_meal4_time", "");
         TextView card1time = findViewById(R.id.card1time);
         TextView card2time = findViewById(R.id.card2time);
         TextView card3time = findViewById(R.id.card3time);
+        TextView card4time = findViewById(R.id.card4time);
         setTime(card1time, meal1_time);
         setTime(card2time, meal2_time);
         setTime(card3time, meal3_time);
+        setTime(card4time, meal4_time);
     }
 
     private void setTime(TextView view, String text) {

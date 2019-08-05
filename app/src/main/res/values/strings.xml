@@ -14,8 +14,10 @@
     <string name="addmore">Tap to add another meal</string>
     <string name="retake">Retake</string>
     <string name="meal1title">Breakfast</string>
-    <string name="note">Enter your note</string>
-    <string name="contentdescription">a photo of your meal</string>
     <string name="meal2title">Lunch</string>
     <string name="meal3title">Dinner</string>
+    <string name="meal4title">Snacks</string>
+    <string name="note">Enter your note</string>
+    <string name="contentdescription">a photo of your meal</string>
+
 </resources>
