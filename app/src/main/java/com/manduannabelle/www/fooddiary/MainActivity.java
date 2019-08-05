@@ -1,11 +1,13 @@
 package com.manduannabelle.www.fooddiary;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -16,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -35,11 +38,17 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     public static final String SHARED_PREFS = "sharedPrefs";
     String currentDate;
     Calendar calendar;
+    Dialog onItsWay;
+    Button accept;
+    TextView title, message;
+    ImageView closePopup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        onItsWay = new Dialog(this);
 
         ImageButton imgButton = (ImageButton) findViewById(R.id.toolbar_calendar);
         imgButton.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +109,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         loadCardTitle();
         loadCardTime();
 
+        setListenerChevronLeft();
+        setListenerChevronRight();
+        updateRightButtonColor();
+    }
+
+    public void setListenerChevronLeft() {
         ImageButton yesterday = findViewById(R.id.toolbar_nav_left);
         yesterday.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +122,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 goToYesterday(yesterday);
             }
         });
+    }
+
+    public void setListenerChevronRight() {
         ImageButton tomorrow = findViewById(R.id.toolbar_nav_right);
         tomorrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,16 +132,46 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 goToTomorrow(tomorrow);
             }
         });
-        updateRightButtonColor();
     }
+
+    public void onItsWayPopUp(ImageButton button) {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItsWay.setContentView(R.layout.on_the_way_popup);
+                closePopup = (ImageView) onItsWay.findViewById(R.id.close_on_the_way);
+                accept = (Button) onItsWay.findViewById(R.id.accept_on_its_way);
+
+                closePopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onItsWay.dismiss();
+                    }
+                });
+
+                accept.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onItsWay.dismiss();
+                    }
+                });
+
+                onItsWay.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                onItsWay.show();
+            }
+        });
+    }
+
 
     public void updateLeftButtonColor() {
         ImageButton yesterday = findViewById(R.id.toolbar_nav_left);
         if (!dateAfterMinDate(calendar.getTime())) {
             // set < button to gray
             yesterday.setBackground(getResources().getDrawable(R.drawable.ic_chevron_left_gray));
+            onItsWayPopUp(yesterday);
         } else {
             yesterday.setBackground(getResources().getDrawable(R.drawable.ic_chevron_left_white));
+            setListenerChevronLeft();
         }
     }
 
@@ -132,8 +180,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         if (!dateBeforeMaxDate(calendar.getTime())) {
             // set > button to gray
             tomorrow.setBackground(getResources().getDrawable(R.drawable.ic_chevron_right_gray));
+            onItsWayPopUp(tomorrow);
         } else {
             tomorrow.setBackground(getResources().getDrawable(R.drawable.ic_chevron_right_white));
+            setListenerChevronRight();
         }
     }
 
