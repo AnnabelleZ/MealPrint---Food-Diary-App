@@ -45,8 +45,8 @@
                     android:layout_marginEnd="20dp"
                     android:textAlignment="center"
                     android:textStyle="bold"
-                    android:textSize="25dp"
-                    android:text="Opps!"/>
+                    android:textSize="35sp"
+                    android:text="@string/opps"/>
 
                 <ImageView
                     android:layout_width="200dp"
@@ -65,14 +65,14 @@
                     android:layout_marginBottom="10dp"
                     android:textAlignment="center"
                     android:textSize="20sp"
-                    android:text="Currently only support 7 days of food diary. More features are on the way..."/>
+                    android:text="@string/ontheway"/>
 
                 <Button
                     android:id="@+id/accept_on_its_way"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Okay"
+                    android:text="@string/okay"
                     android:textColor="@color/colorPrimaryDark"
                     android:background="@color/white"
                     android:elevation="5dp"

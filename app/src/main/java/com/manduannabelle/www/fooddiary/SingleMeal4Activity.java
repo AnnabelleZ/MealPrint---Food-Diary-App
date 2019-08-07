@@ -31,7 +31,8 @@ public class SingleMeal4Activity extends UtilityActivity{
     private TextView time;
     private String meal4_time;
     ImageManager imgManager = new ImageManager(SingleMeal4Activity.this);
-    String currentDate;
+    String currentDateFull;
+    String currentDateShort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +51,10 @@ public class SingleMeal4Activity extends UtilityActivity{
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         Calendar calendar = Calendar.getInstance();
 
-        currentDate = sharedPreferences.getString("current_date", TimeManager.dateFormatter(calendar));
+        currentDateFull = sharedPreferences.getString("current_date", TimeManager.dateFormatter(calendar));
+        currentDateShort = sharedPreferences.getString("current_date_short", TimeManager.dateFormatterShort(calendar));
         TextView textViewDate = findViewById(R.id.text_view_date);
-        textViewDate.setText(currentDate);
+        textViewDate.setText(currentDateFull);
 
         TimeManager.setDefaultTime(time);
         loadImageIndicator();
@@ -73,13 +75,13 @@ public class SingleMeal4Activity extends UtilityActivity{
         Toast.makeText(this, "img set: " + imgSet.toString(), Toast.LENGTH_SHORT).show();
     }
 
-    public void saveDate(String currentDate) {
+    /*public void saveDate(String currentDateShort) {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putString("current_date", currentDate);
+        editor.putString("current_date", currentDateShort);
         editor.apply();
-    }
+    }*/
 
     public void setMealTime() {
         time.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +97,7 @@ public class SingleMeal4Activity extends UtilityActivity{
 
     public void loadImageIndicator() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        imgSet = sharedPreferences.getBoolean(currentDate + "_meal4_imgSet", false);
+        imgSet = sharedPreferences.getBoolean(currentDateShort + "_meal4_imgSet", false);
     }
 
     public void saveData() {
@@ -103,9 +105,9 @@ public class SingleMeal4Activity extends UtilityActivity{
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         // save data
-        editor.putString(currentDate + "_meal4_title", editTitle.getText().toString());
-        editor.putString(currentDate + "_meal4_note", editNote.getText().toString());
-        editor.putString(currentDate + "_meal4_time", time.getText().toString());
+        editor.putString(currentDateShort + "_meal4_title", editTitle.getText().toString());
+        editor.putString(currentDateShort + "_meal4_note", editNote.getText().toString());
+        editor.putString(currentDateShort + "_meal4_time", time.getText().toString());
 
         editor.apply();
 
@@ -116,7 +118,7 @@ public class SingleMeal4Activity extends UtilityActivity{
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if (selectedImage != null)
-            editor.putString(currentDate + "_meal4_imgPath", imgManager.saveImageToInternalStorage(selectedImage, 4, currentDate));
+            editor.putString(currentDateShort + "_meal4_imgPath", imgManager.saveImageToInternalStorage(selectedImage, 4, currentDateShort));
         editor.apply();
 
         Toast.makeText(this, "Photo saved", Toast.LENGTH_SHORT).show();
@@ -124,17 +126,17 @@ public class SingleMeal4Activity extends UtilityActivity{
 
     public void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        meal4_title = sharedPreferences.getString(currentDate + "_meal4_title", "Snacks");
-        meal4_note = sharedPreferences.getString(currentDate + "_meal4_note", "");
-        imgPath = sharedPreferences.getString(currentDate + "_meal4_imgPath", "");
-        meal4_time = sharedPreferences.getString(currentDate + "_meal4_time", "");
+        meal4_title = sharedPreferences.getString(currentDateShort + "_meal4_title", getResources().getString(R.string.meal4title));
+        meal4_note = sharedPreferences.getString(currentDateShort + "_meal4_note", "");
+        imgPath = sharedPreferences.getString(currentDateShort + "_meal4_imgPath", "");
+        meal4_time = sharedPreferences.getString(currentDateShort + "_meal4_time", "");
     }
 
     public void updateViews() {
         editTitle.setText(meal4_title);
         editNote.setText(meal4_note);
         if (imgSet)
-            imgManager.loadImageFromStorage(imgPath, 4, meal4image, currentDate);
+            imgManager.loadImageFromStorage(imgPath, 4, meal4image, currentDateShort);
         time.setText(meal4_time);
     }
 
@@ -169,13 +171,13 @@ public class SingleMeal4Activity extends UtilityActivity{
             @Override
             public void onClick(View view) {
                 imgSet = false;
-                imgManager.saveImageIndicator(4, imgSet, currentDate);
+                imgManager.saveImageIndicator(4, imgSet, currentDateShort);
                 SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(currentDate + "_meal4_imgPath", null);
+                editor.putString(currentDateShort + "_meal4_imgPath", null);
                 selectedImage = null;
                 editor.apply();
-                imgPath = sharedPreferences.getString(currentDate + "_meal4_imgPath", "");
+                imgPath = sharedPreferences.getString(currentDateShort + "_meal4_imgPath", "");
                 meal4image.setImageResource(android.R.color.transparent);
                 takePhoto();
             }
@@ -192,7 +194,7 @@ public class SingleMeal4Activity extends UtilityActivity{
             meal4image.setImageBitmap(selectedImage);
             TimeManager.setDefaultTime(time);
             imgSet = true;
-            imgManager.saveImageIndicator(4, imgSet, currentDate);
+            imgManager.saveImageIndicator(4, imgSet, currentDateShort);
             savePhoto();
             Toast.makeText(this, "img set: " + imgSet.toString(), Toast.LENGTH_SHORT).show();
         }

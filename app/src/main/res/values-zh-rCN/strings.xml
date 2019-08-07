@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">饮食日记</string>
+    <string name="about">关于我们</string>
+    <string name="breakfast">轻按添加早餐</string>
+    <string name="contentdescription">餐食图片</string>
+    <string name="calendar">日历</string>
+    <string name="dinner">轻按添加晚餐</string>
+    <string name="lunch">轻按添加午餐</string>
+    <string name="snack">轻按添加零食</string>
+    <string name="theme">主题</string>
+    <string name="share">分享</string>
+    <string name="retake">重拍</string>
+    <string name="note">输入笔记</string>
+    <string name="rateus">评分</string>
+    <string name="feedback">意见反馈</string>
+    <string name="meal4title">零食</string>
+    <string name="meal3title">晚餐</string>
+    <string name="meal2title">午餐</string>
+    <string name="meal1title">早餐</string>
+    <string name="okay">好吧╮(╯-╰)╭</string>
+    <string name="ontheway">目前我们只支持记录7天的食物日记哦，更多功能正在路上...</string>
+    <string name="opps">哎呀</string>
+</resources>

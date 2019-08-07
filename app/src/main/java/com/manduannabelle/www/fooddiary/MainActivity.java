@@ -36,7 +36,8 @@ import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     public static final String SHARED_PREFS = "sharedPrefs";
-    String currentDate;
+    String currentDateFull;
+    String currentDateShort;
     Calendar calendar;
     Dialog onItsWay;
     Button accept;
@@ -62,7 +63,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         // for the date on the toolbar
         // reset the selected day in the SharedPreferences to the current date
         calendar = Calendar.getInstance();
-        saveDate(TimeManager.dateFormatter(calendar));
+        currentDateFull = TimeManager.dateFormatter(calendar);
+        currentDateShort = TimeManager.dateFormatterShort(calendar);
+        saveDate();
         // load selected day
         loadDate();
 
@@ -104,14 +107,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 startActivity(new Intent(MainActivity.this, SingleMeal4Activity.class));
             }
         });
-
-        loadCardBackground();
-        loadCardTitle();
-        loadCardTime();
-
         setListenerChevronLeft();
         setListenerChevronRight();
-        updateRightButtonColor();
+        saveDateStateAndReloadPage();
     }
 
     public void setListenerChevronLeft() {
@@ -231,9 +229,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
         TextView date = (TextView) findViewById(R.id.text_view_date);
         date.setText(currentDateString);
-        currentDate = currentDateString;
-        saveDate(currentDateString);
-        Toast.makeText(this, currentDate, Toast.LENGTH_SHORT).show();
+        currentDateFull = currentDateString;
+        currentDateShort = TimeManager.dateFormatterShort(calendar);
+        saveDate();
+        //Toast.makeText(this, currentDateShort, Toast.LENGTH_SHORT).show();
         // reload the page
         loadCardBackground();
         loadCardTitle();
@@ -252,11 +251,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         saveDateStateAndReloadPage();
     }
 
-    public void saveDate(String currentDateString) {
+    public void saveDate() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putString("current_date", currentDateString);
+        editor.putString("current_date", currentDateFull);
+        editor.putString("current_date_short", currentDateShort);
         editor.commit();
     }
 
@@ -264,26 +264,29 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 
         calendar = Calendar.getInstance();
-        currentDate = sharedPreferences.getString("current_date", TimeManager.dateFormatter(calendar));
+        currentDateFull = sharedPreferences.getString("current_date", TimeManager.dateFormatter(calendar));
+        currentDateShort = sharedPreferences.getString("current_date", TimeManager.dateFormatterShort(calendar));
 
         TextView textViewDate = findViewById(R.id.text_view_date);
-        textViewDate.setText(currentDate);
+        textViewDate.setText(currentDateFull);
     }
 
     private void loadCardBackground() {
+        //Toast.makeText(this, "loadCardBackground", Toast.LENGTH_SHORT).show();
         ImageView card1background = findViewById(R.id.card1background);
         ImageView card2background = findViewById(R.id.card2background);
         ImageView card3background = findViewById(R.id.card3background);
         ImageView card4background = findViewById(R.id.card4background);
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String imgPath1 = sharedPreferences.getString(currentDate + "_meal1_imgPath", "");
-        String imgPath2 = sharedPreferences.getString(currentDate + "_meal2_imgPath", "");
-        String imgPath3 = sharedPreferences.getString(currentDate + "_meal3_imgPath", "");
-        String imgPath4 = sharedPreferences.getString(currentDate + "_meal4_imgPath", "");
-        loadImageFromPath(card1background, imgPath1, currentDate.replace("/", "_") + "_meal1.jpg");
-        loadImageFromPath(card2background, imgPath2, currentDate.replace("/", "_") + "_meal2.jpg");
-        loadImageFromPath(card3background, imgPath3, currentDate.replace("/", "_") + "_meal3.jpg");
-        loadImageFromPath(card4background, imgPath4, currentDate.replace("/", "_") + "_meal4.jpg");
+        String imgPath1 = sharedPreferences.getString(currentDateShort + "_meal1_imgPath", "");
+        //Toast.makeText(this, imgPath1, Toast.LENGTH_SHORT).show();
+        String imgPath2 = sharedPreferences.getString(currentDateShort + "_meal2_imgPath", "");
+        String imgPath3 = sharedPreferences.getString(currentDateShort + "_meal3_imgPath", "");
+        String imgPath4 = sharedPreferences.getString(currentDateShort + "_meal4_imgPath", "");
+        loadImageFromPath(card1background, imgPath1, currentDateShort.replace("/", "_") + "_meal1.jpg");
+        loadImageFromPath(card2background, imgPath2, currentDateShort.replace("/", "_") + "_meal2.jpg");
+        loadImageFromPath(card3background, imgPath3, currentDateShort.replace("/", "_") + "_meal3.jpg");
+        loadImageFromPath(card4background, imgPath4, currentDateShort.replace("/", "_") + "_meal4.jpg");
     }
 
     private void loadImageFromPath(ImageView background, String imgPath, String name) {
@@ -305,10 +308,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     private void loadCardTitle() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String meal1_title = sharedPreferences.getString(currentDate + "_meal1_title", "");
-        String meal2_title = sharedPreferences.getString(currentDate + "_meal2_title", "");
-        String meal3_title = sharedPreferences.getString(currentDate + "_meal3_title", "");
-        String meal4_title = sharedPreferences.getString(currentDate + "_meal4_title", "");
+        String meal1_title = sharedPreferences.getString(currentDateShort + "_meal1_title", "");
+        String meal2_title = sharedPreferences.getString(currentDateShort + "_meal2_title", "");
+        String meal3_title = sharedPreferences.getString(currentDateShort + "_meal3_title", "");
+        String meal4_title = sharedPreferences.getString(currentDateShort + "_meal4_title", "");
         TextView card1text = findViewById(R.id.card1text);
         TextView card2text = findViewById(R.id.card2text);
         TextView card3text = findViewById(R.id.card3text);
@@ -332,10 +335,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     private void loadCardTime() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String meal1_time = sharedPreferences.getString(currentDate + "_meal1_time", "");
-        String meal2_time = sharedPreferences.getString(currentDate + "_meal2_time", "");
-        String meal3_time = sharedPreferences.getString(currentDate + "_meal3_time", "");
-        String meal4_time = sharedPreferences.getString(currentDate + "_meal4_time", "");
+        String meal1_time = sharedPreferences.getString(currentDateShort + "_meal1_time", "");
+        String meal2_time = sharedPreferences.getString(currentDateShort + "_meal2_time", "");
+        String meal3_time = sharedPreferences.getString(currentDateShort + "_meal3_time", "");
+        String meal4_time = sharedPreferences.getString(currentDateShort + "_meal4_time", "");
         TextView card1time = findViewById(R.id.card1time);
         TextView card2time = findViewById(R.id.card2time);
         TextView card3time = findViewById(R.id.card3time);
@@ -368,12 +371,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             case R.id.share:
                 Toast.makeText(this, "Share selected", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.theme:
+            /*case R.id.theme:
                 Toast.makeText(this, "Theme selected", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.language:
                 Toast.makeText(this, "Language selected", Toast.LENGTH_SHORT).show();
-                return true;
+                return true;*/
             case R.id.feedback:
                 Toast.makeText(this, "Feedback selected", Toast.LENGTH_SHORT).show();
                 return true;

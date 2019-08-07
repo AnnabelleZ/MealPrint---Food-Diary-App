@@ -34,21 +34,21 @@ import java.io.IOException;
 import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
 
 public class ImageManager {
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static Context context;
+    protected static final String SHARED_PREFS = "sharedPrefs";
+    protected static Context context;
 
-    public ImageManager(Context context) {
+    protected ImageManager(Context context) {
         this.context = context;
     }
 
-    public void saveImageIndicator(int meal, Boolean imgSet, String currentDate) {
+    protected void saveImageIndicator(int meal, Boolean imgSet, String currentDate) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(currentDate + "_meal" + meal + "_imgSet", imgSet);
         editor.apply();
     }
 
-    public static Bitmap darkenBitMap(Bitmap bm) {
+    protected static Bitmap darkenBitMap(Bitmap bm) {
 
         Canvas canvas = new Canvas(bm);
         Paint p = new Paint(Color.RED);
@@ -60,7 +60,7 @@ public class ImageManager {
         return bm;
     }
 
-    public String saveImageToInternalStorage(Bitmap bitmapImage, int meal, String currentDate) {
+    protected String saveImageToInternalStorage(Bitmap bitmapImage, int meal, String currentDate) {
         ContextWrapper cw = new ContextWrapper(context.getApplicationContext());
         // path to /data/data/FoodDiary/app_data/imageDir
         File dir = cw.getDir("imageDir", Context.MODE_PRIVATE);

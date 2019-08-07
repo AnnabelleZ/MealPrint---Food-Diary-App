@@ -2,7 +2,6 @@
     <string name="app_name">Food Diary</string>
     <string name="share">Share</string>
     <string name="theme">Theme</string>
-    <string name="language">Language</string>
     <string name="feedback">Feedback</string>
     <string name="rateus">Rate us</string>
     <string name="about">About</string>
@@ -11,7 +10,6 @@
     <string name="lunch">Tap to add lunch</string>
     <string name="dinner">Tap to add dinner</string>
     <string name="snack">Tap to add snacks</string>
-    <string name="addmore">Tap to add another meal</string>
     <string name="retake">Retake</string>
     <string name="meal1title">Breakfast</string>
     <string name="meal2title">Lunch</string>
@@ -19,5 +17,9 @@
     <string name="meal4title">Snacks</string>
     <string name="note">Enter your note</string>
     <string name="contentdescription">a photo of your meal</string>
+    <string name="opps">Opps</string>
+    <string name="ontheway">Currently only support 7 days of food diary. More features are on the way...</string>
+    <string name="okay">Okay</string>
+
 
 </resources>
