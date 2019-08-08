@@ -20,6 +20,17 @@
     <string name="opps">Opps</string>
     <string name="ontheway">Currently only support 7 days of food diary. More features are on the way...</string>
     <string name="okay">Okay</string>
+    <string name="rateusontecent">去腾讯应用宝写评价</string>
+    <string name="rateusonbaidu">去百度手机助手写评价</string>
+    <string name="rateusonhuawei">去华为应用市场写评价</string>
+    <string name="rateuson360">去360手机助手写评价</string>
+    <string name="rateusongoogle">Rate us on GooglePlay</string>
+    <string name="rateusonamazon">Rate us on Amazon App Store</string>
+    <string name="to">To:</string>
+    <string name="subject">Subject:</string>
+    <string name="yoursuggestion">Your Suggestions:</string>
+    <string name="email" translatable="false">fooddiary@gmail.com</string>
+    <string name="send">Send</string>
 
 
 </resources>

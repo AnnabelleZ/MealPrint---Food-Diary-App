@@ -2,6 +2,8 @@ package com.manduannabelle.www.fooddiary;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,9 +30,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.text.DateFormat;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import android.content.Intent;
 
@@ -41,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     Calendar calendar;
     Dialog onItsWay;
     Button accept;
-    TextView title, message;
     ImageView closePopup;
 
     @Override
@@ -110,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         setListenerChevronLeft();
         setListenerChevronRight();
         saveDateStateAndReloadPage();
+        deleteOldPictures();
     }
 
     public void setListenerChevronLeft() {
@@ -279,7 +283,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         ImageView card4background = findViewById(R.id.card4background);
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String imgPath1 = sharedPreferences.getString(currentDateShort + "_meal1_imgPath", "");
-        //Toast.makeText(this, imgPath1, Toast.LENGTH_SHORT).show();
         String imgPath2 = sharedPreferences.getString(currentDateShort + "_meal2_imgPath", "");
         String imgPath3 = sharedPreferences.getString(currentDateShort + "_meal3_imgPath", "");
         String imgPath4 = sharedPreferences.getString(currentDateShort + "_meal4_imgPath", "");
@@ -287,6 +290,28 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         loadImageFromPath(card2background, imgPath2, currentDateShort.replace("/", "_") + "_meal2.jpg");
         loadImageFromPath(card3background, imgPath3, currentDateShort.replace("/", "_") + "_meal3.jpg");
         loadImageFromPath(card4background, imgPath4, currentDateShort.replace("/", "_") + "_meal4.jpg");
+    }
+
+    private void deleteOldPictures() {
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        File imgPath = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        for (int i = 0; i < 4; i++) {
+            Calendar today = Calendar.getInstance();
+            today.add(Calendar.DATE, -7);
+            Format f = new SimpleDateFormat("M/d/yy", Locale.US);
+            String date = f.format(today.getTime());
+            File file = new File(imgPath,date.replace("/","_") + "_meal" + (i+1) + ".jpg");
+            file.delete();
+
+            editor.remove(date + "_meal" + (i+1) + "_title");
+            editor.remove(date + "_meal" + (i+1) + "_note");
+            editor.remove(date + "_meal" + (i+1) + "_time");
+            editor.remove(date + "_meal" + (i+1) + "_imgPath");
+            editor.remove(date + "_meal" + (i+1) + "_imgSet");
+            editor.commit();
+        }
     }
 
     private void loadImageFromPath(ImageView background, String imgPath, String name) {
@@ -378,13 +403,13 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 Toast.makeText(this, "Language selected", Toast.LENGTH_SHORT).show();
                 return true;*/
             case R.id.feedback:
-                Toast.makeText(this, "Feedback selected", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), FeedbackActivity.class));
                 return true;
             case R.id.rateus:
-                Toast.makeText(this, "Rate us selected", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), RateUsActivity.class));
                 return true;
             case R.id.about:
-                Toast.makeText(this, "About selected", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -26,6 +26,9 @@
         <activity android:name=".SingleMeal4Activity"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".AboutActivity"/>
+        <activity android:name=".FeedbackActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".RateUsActivity"/>
     </application>
 
 </manifest>

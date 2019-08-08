@@ -14,11 +14,21 @@
     <string name="meal4title">간식</string>
     <string name="note">메모 작성하기</string>
     <string name="rateus">평가해주세요</string>
-    <string name="retake">다시 찍다</string>
+    <string name="retake">사진 변경하기</string>
     <string name="share">공유</string>
     <string name="snack">간식 추가</string>
     <string name="theme">주제</string>
-    <string name="opps">헐</string>
-    <string name="okay">알았어</string>
+    <string name="opps">"헐 ~ㅋ "</string>
+    <string name="okay">오케이!</string>
     <string name="ontheway">음식일기는 현자 일주일까지만 지원하는 중입니다. 조금만 더 기다려주세요</string>
+    <string name="rateuson360">去360手机助手写评价</string>
+    <string name="rateusonbaidu">去百度手机助手写评价</string>
+    <string name="rateusonhuawei">去华为应用市场写评价</string>
+    <string name="rateusontecent">去腾讯应用宝写评价</string>
+    <string name="rateusonamazon">Rate us on Amazon App Store</string>
+    <string name="rateusongoogle">Rate us on GooglePlay</string>
+    <string name="subject">Subject:</string>
+    <string name="to">To:</string>
+    <string name="yoursuggestion">Your Suggestions:</string>
+    <string name="send">"발송하다 "</string>
 </resources>

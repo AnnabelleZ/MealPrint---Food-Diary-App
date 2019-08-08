@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.Calendar;
 
 import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
@@ -78,7 +79,8 @@ public class SingleMeal1Activity extends UtilityActivity{
             }
         });
         setMealTime();
-        //Toast.makeText(this, "img set: " + imgSet.toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, imgPath, Toast.LENGTH_SHORT).show();
+
     }
 
     public void setMealTime() {
