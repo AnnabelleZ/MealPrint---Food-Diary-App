@@ -25,10 +25,11 @@
     <string name="rateusonbaidu">去百度手机助手写评价</string>
     <string name="rateusonhuawei">去华为应用市场写评价</string>
     <string name="rateusontecent">去腾讯应用宝写评价</string>
-    <string name="rateusonamazon">Rate us on Amazon App Store</string>
-    <string name="rateusongoogle">Rate us on GooglePlay</string>
-    <string name="subject">Subject:</string>
+    <string name="rateusonamazon">아마존 앱스토어에서 평가하기</string>
+    <string name="rateusongoogle">구글플레이에서 저희를 평가해주세요</string>
+    <string name="subject">제목 :</string>
     <string name="to">To:</string>
-    <string name="yoursuggestion">Your Suggestions:</string>
-    <string name="send">"발송하다 "</string>
+    <string name="yoursuggestion">개선할 점:</string>
+    <string name="send">보내기</string>
+    <string name="collage">콜라주</string>
 </resources>

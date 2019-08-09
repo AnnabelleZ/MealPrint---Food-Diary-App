@@ -2,17 +2,20 @@ package com.manduannabelle.www.fooddiary;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -29,9 +32,10 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.text.DateFormat;
+import java.io.OutputStream;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -292,6 +296,23 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         loadImageFromPath(card4background, imgPath4, currentDateShort.replace("/", "_") + "_meal4.jpg");
     }
 
+    private void loadImageFromPath(ImageView background, String imgPath, String name) {
+        if (!imgPath.isEmpty()) {
+            try {
+                File f = new File(imgPath, name);
+                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+                if (b != null) {
+                    Bitmap mutable = b.copy(Bitmap.Config.ARGB_8888, true);
+                    background.setImageBitmap(ImageManager.darkenBitMap(mutable));
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            background.setImageResource(android.R.color.transparent);
+        }
+    }
+
     private void deleteOldPictures() {
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         File imgPath = cw.getDir("imageDir", Context.MODE_PRIVATE);
@@ -311,23 +332,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             editor.remove(date + "_meal" + (i+1) + "_imgPath");
             editor.remove(date + "_meal" + (i+1) + "_imgSet");
             editor.commit();
-        }
-    }
-
-    private void loadImageFromPath(ImageView background, String imgPath, String name) {
-        if (!imgPath.isEmpty()) {
-            try {
-                File f = new File(imgPath, name);
-                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-                if (b != null) {
-                    Bitmap mutable = b.copy(Bitmap.Config.ARGB_8888, true);
-                    background.setImageBitmap(ImageManager.darkenBitMap(mutable));
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        } else {
-            background.setImageResource(android.R.color.transparent);
         }
     }
 
@@ -394,7 +398,27 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.share:
-                Toast.makeText(this, "Share selected", Toast.LENGTH_SHORT).show();
+                ArrayList<Bitmap> parts = new ArrayList<>();
+                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+                for (int i = 0; i < 4; i++) {
+                    String imgPath = sharedPreferences.getString(currentDateShort + "_meal" + (i+1) +"_imgPath", "");
+                    if (!imgPath.isEmpty()) {
+                            try {
+                                File f = new File(imgPath, currentDateShort.replace("/", "_") + "_meal" + (i+1) + ".jpg");
+                                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+                                if (b != null)
+                                    parts.add(b);
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                    }
+                }
+                String dateStr = TimeManager.dateFormatter(calendar);
+                if (parts.size() == 0) {
+                    Toast.makeText(this, "Please add more photos", Toast.LENGTH_SHORT).show();
+                } else {
+                    shareImage(createCollage(parts, dateStr));
+                }
                 return true;
             /*case R.id.theme:
                 Toast.makeText(this, "Theme selected", Toast.LENGTH_SHORT).show();
@@ -416,4 +440,72 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         }
 
     }
+
+    private Bitmap createCollage(ArrayList<Bitmap> parts,String dateStr) {
+        /*Bitmap[] parts = new Bitmap[4];
+        parts[0] = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.googleplay);
+        parts[1] = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.googleplay);
+        parts[2] = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.googleplay);
+        parts[3] = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.googleplay);*/
+        Bitmap logo = getBitmapFromDrawable(getResources().getDrawable(R.mipmap.ic_toast_round));
+        Bitmap date = textAsBitmap(dateStr, logo.getHeight() * 2 / 3, getResources().getColor(R.color.colorDashboardDeep));
+        Bitmap result = Bitmap.createBitmap(parts.get(0).getWidth(), parts.get(0).getHeight() * parts.size() + logo.getHeight() * 3/2, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(result);
+        Paint paint = new Paint();
+        canvas.drawColor(getResources().getColor(R.color.white));
+        for (int i = 0; i < parts.size(); i++) {
+            canvas.drawBitmap(parts.get(i), 0, logo.getHeight() * 3/2 + parts.get(i).getHeight() * i, paint);
+        }
+        canvas.drawBitmap(logo, logo.getWidth(), logo.getHeight() / 4, paint);
+        canvas.drawBitmap(date, logo.getWidth() * 5/2, logo.getHeight() / 4, paint);
+        return result;
+    }
+
+    private Bitmap getBitmapFromDrawable(Drawable drawable) {
+        final Bitmap bmp = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(bmp);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bmp;
+    }
+
+    public Bitmap textAsBitmap(String text, float textSize, int textColor) {
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setTextSize(textSize);
+        paint.setColor(textColor);
+        paint.setTextAlign(Paint.Align.LEFT);
+        float baseline = -paint.ascent(); // ascent() is negative
+        int width = (int) (paint.measureText(text) + 0.5f); // round
+        int height = (int) (baseline + paint.descent() + 0.5f);
+        Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(image);
+        canvas.drawText(text, 0, baseline, paint);
+        return image;
+    }
+
+    protected void shareImage(Bitmap mBitmap) {
+        Bitmap icon = mBitmap;
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("image/jpeg");
+
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "title");
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+        Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                values);
+
+
+        OutputStream outstream;
+        try {
+            outstream = getContentResolver().openOutputStream(uri);
+            icon.compress(Bitmap.CompressFormat.JPEG, 100, outstream);
+            outstream.close();
+        } catch (Exception e) {
+            System.err.println(e.toString());
+        }
+
+        share.putExtra(Intent.EXTRA_STREAM, uri);
+        startActivity(Intent.createChooser(share, "Share Image"));
+    }
+
 }

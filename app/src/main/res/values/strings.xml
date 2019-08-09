@@ -31,6 +31,7 @@
     <string name="yoursuggestion">Your Suggestions:</string>
     <string name="email" translatable="false">fooddiary@gmail.com</string>
     <string name="send">Send</string>
+    <string name="collage">Collage Maker</string>
 
 
 </resources>
