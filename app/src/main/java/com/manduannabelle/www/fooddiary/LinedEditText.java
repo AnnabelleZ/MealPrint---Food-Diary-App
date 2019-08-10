@@ -1,16 +1,10 @@
 package com.manduannabelle.www.fooddiary;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputConnection;
-import android.widget.EditText;
 
 /* code from https://stackoverflow.com/questions/10992411/how-to-add-pagelines-to-a-edittext-in-android */
 public class LinedEditText extends android.support.v7.widget.AppCompatEditText

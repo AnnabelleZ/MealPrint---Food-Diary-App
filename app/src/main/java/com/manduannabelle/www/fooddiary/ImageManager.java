@@ -1,10 +1,7 @@
 package com.manduannabelle.www.fooddiary;
 
-import android.app.Activity;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,24 +11,12 @@ import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Display;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
 
 public class ImageManager {
     protected static final String SHARED_PREFS = "sharedPrefs";

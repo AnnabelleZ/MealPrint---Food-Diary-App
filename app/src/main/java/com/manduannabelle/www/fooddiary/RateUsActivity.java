@@ -18,11 +18,6 @@ public class RateUsActivity extends AppCompatActivity {
         setContentView(R.layout.rateus);
 
         ImageButton back = findViewById(R.id.rateus_back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            }
-        });
+        back.setOnClickListener((View v) -> startActivity(new Intent(getApplicationContext(), MainActivity.class)));
     }
 }

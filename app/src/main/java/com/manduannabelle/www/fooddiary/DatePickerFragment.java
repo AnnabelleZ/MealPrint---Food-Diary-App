@@ -24,7 +24,7 @@ public class DatePickerFragment extends DialogFragment {
         c.setTime(today);
         c.add( Calendar.DAY_OF_MONTH, -6 ); // Subtract 6 months
         long minDate = c.getTime().getTime(); // Twice!
-        //return new DatePickerDialog(getActivity(), (DatePickerDialog.OnDateSetListener) getActivity(), year, month, day);
+
         DatePickerDialog pickerDialog = new DatePickerDialog(getActivity(), (DatePickerDialog.OnDateSetListener) getActivity(), year, month, day);
         pickerDialog.getDatePicker().setMaxDate(today.getTime());
         pickerDialog.getDatePicker().setMinDate(minDate);

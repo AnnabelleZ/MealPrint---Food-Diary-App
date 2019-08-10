@@ -25,20 +25,11 @@ public class FeedbackActivity extends UtilityActivity {
         editTextMessage = findViewById(R.id.edit_text_message);
 
         Button buttonSend = findViewById(R.id.button_send);
-        buttonSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendMail();
-            }
-        });
+        buttonSend.setOnClickListener((View v) -> sendMail());
 
         ImageButton back = findViewById(R.id.feedback_back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            }
-        });
+        back.setOnClickListener((View v) ->
+                startActivity(new Intent(getApplicationContext(), MainActivity.class)));
     }
 
     private void sendMail() {

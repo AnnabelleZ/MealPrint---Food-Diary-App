@@ -65,23 +65,10 @@ public class SingleMeal4Activity extends UtilityActivity{
 
         // go back
         ImageButton backButton = findViewById(R.id.toolbar_back);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                backToMain();
-            }
-        });
+        backButton.setOnClickListener((View v) -> backToMain());
         setMealTime();
-        Toast.makeText(this, "img set: " + imgSet.toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "img set: " + imgSet.toString(), Toast.LENGTH_SHORT).show();
     }
-
-    /*public void saveDate(String currentDateShort) {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putString("current_date", currentDateShort);
-        editor.apply();
-    }*/
 
     public void setMealTime() {
         time.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +98,7 @@ public class SingleMeal4Activity extends UtilityActivity{
 
         editor.apply();
 
-        Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
     }
 
     public void savePhoto() {
@@ -121,7 +108,7 @@ public class SingleMeal4Activity extends UtilityActivity{
             editor.putString(currentDateShort + "_meal4_imgPath", imgManager.saveImageToInternalStorage(selectedImage, 4, currentDateShort));
         editor.apply();
 
-        Toast.makeText(this, "Photo saved", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Photo saved", Toast.LENGTH_SHORT).show();
     }
 
     public void loadData() {
@@ -167,20 +154,17 @@ public class SingleMeal4Activity extends UtilityActivity{
     public void retake() {
         // retake photo
         TextView retake = findViewById(R.id.toolbar_retake);
-        retake.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                imgSet = false;
-                imgManager.saveImageIndicator(4, imgSet, currentDateShort);
-                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(currentDateShort + "_meal4_imgPath", null);
-                selectedImage = null;
-                editor.apply();
-                imgPath = sharedPreferences.getString(currentDateShort + "_meal4_imgPath", "");
-                meal4image.setImageResource(android.R.color.transparent);
-                takePhoto();
-            }
+        retake.setOnClickListener((View v) -> {
+            imgSet = false;
+            imgManager.saveImageIndicator(4, imgSet, currentDateShort);
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(currentDateShort + "_meal4_imgPath", null);
+            selectedImage = null;
+            editor.apply();
+            imgPath = sharedPreferences.getString(currentDateShort + "_meal4_imgPath", "");
+            meal4image.setImageResource(android.R.color.transparent);
+            takePhoto();
         });
 
     }
@@ -191,12 +175,14 @@ public class SingleMeal4Activity extends UtilityActivity{
         if (requestCode == 1213 && resultCode == Activity.RESULT_OK) {
             String filePath = data.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH);
             selectedImage = BitmapFactory.decodeFile(filePath);
+            if (selectedImage.getHeight() > selectedImage.getWidth()) {
+                selectedImage = ImageManager.rotateBitmap(selectedImage);
+            }
             meal4image.setImageBitmap(selectedImage);
             TimeManager.setDefaultTime(time);
             imgSet = true;
             imgManager.saveImageIndicator(4, imgSet, currentDateShort);
             savePhoto();
-            Toast.makeText(this, "img set: " + imgSet.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 

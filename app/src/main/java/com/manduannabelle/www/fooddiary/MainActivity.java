@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
         onItsWay = new Dialog(this);
 
-        ImageButton imgButton = (ImageButton) findViewById(R.id.toolbar_calendar);
+        ImageButton imgButton = findViewById(R.id.toolbar_calendar);
         imgButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,34 +86,15 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         CardView card3 = findViewById(R.id.card3);
         CardView card4 = findViewById(R.id.card4);
 
-        card1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // go to singleMeal1Activity
-                startActivity(new Intent(MainActivity.this, SingleMeal1Activity.class));
-            }
-        });
-        card2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // go to singleMeal2Activity
-                startActivity(new Intent(MainActivity.this, SingleMeal2Activity.class));
-            }
-        });
-        card3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // go to singleMeal3Activity
-                startActivity(new Intent(MainActivity.this, SingleMeal3Activity.class));
-            }
-        });
-        card4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // go to singleMeal4Activity
-                startActivity(new Intent(MainActivity.this, SingleMeal4Activity.class));
-            }
-        });
+        card1.setOnClickListener((View v) ->
+                startActivity(new Intent(MainActivity.this, SingleMeal1Activity.class)));
+        card2.setOnClickListener((View v) ->
+                startActivity(new Intent(MainActivity.this, SingleMeal2Activity.class)));
+        card3.setOnClickListener((View v) ->
+                startActivity(new Intent(MainActivity.this, SingleMeal3Activity.class)));
+        card4.setOnClickListener((View v) ->
+                startActivity(new Intent(MainActivity.this, SingleMeal4Activity.class)));
+
         setListenerChevronLeft();
         setListenerChevronRight();
         saveDateStateAndReloadPage();
@@ -122,49 +103,26 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     public void setListenerChevronLeft() {
         ImageButton yesterday = findViewById(R.id.toolbar_nav_left);
-        yesterday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToYesterday(yesterday);
-            }
-        });
+        yesterday.setOnClickListener((View v) -> goToYesterday());
     }
 
     public void setListenerChevronRight() {
         ImageButton tomorrow = findViewById(R.id.toolbar_nav_right);
-        tomorrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToTomorrow(tomorrow);
-            }
-        });
+        tomorrow.setOnClickListener((View v) -> goToTomorrow());
     }
 
     public void onItsWayPopUp(ImageButton button) {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onItsWay.setContentView(R.layout.on_the_way_popup);
-                closePopup = (ImageView) onItsWay.findViewById(R.id.close_on_the_way);
-                accept = (Button) onItsWay.findViewById(R.id.accept_on_its_way);
+        button.setOnClickListener((View v) ->{
+            onItsWay.setContentView(R.layout.on_the_way_popup);
+            closePopup = onItsWay.findViewById(R.id.close_on_the_way);
+            accept = onItsWay.findViewById(R.id.accept_on_its_way);
 
-                closePopup.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        onItsWay.dismiss();
-                    }
-                });
+            closePopup.setOnClickListener((View v1) -> onItsWay.dismiss());
 
-                accept.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        onItsWay.dismiss();
-                    }
-                });
+            accept.setOnClickListener((View v2) -> onItsWay.dismiss());
 
-                onItsWay.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                onItsWay.show();
-            }
+            onItsWay.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            onItsWay.show();
         });
     }
 
@@ -201,9 +159,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         loadCardTime();
     }
 
-
-
-    public void goToYesterday(ImageButton yesterday) {
+    public void goToYesterday() {
         if (dateAfterMinDate(calendar.getTime())) {
             calendar.add(Calendar.DATE, -1);
             saveDateStateAndReloadPage();
@@ -224,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         return date.before(maxDate);
     }
 
-    public void goToTomorrow(ImageButton tomorrow) {
+    public void goToTomorrow() {
         if (dateBeforeMaxDate(calendar.getTime())) {
             calendar.add(Calendar.DATE, 1);
             saveDateStateAndReloadPage();
@@ -235,12 +191,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     public void saveDateStateAndReloadPage() {
         String currentDateString = TimeManager.dateFormatter(calendar);
 
-        TextView date = (TextView) findViewById(R.id.text_view_date);
+        TextView date = findViewById(R.id.text_view_date);
         date.setText(currentDateString);
         currentDateFull = currentDateString;
         currentDateShort = TimeManager.dateFormatterShort(calendar);
         saveDate();
-        //Toast.makeText(this, currentDateShort, Toast.LENGTH_SHORT).show();
         // reload the page
         loadCardBackground();
         loadCardTitle();
@@ -265,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
         editor.putString("current_date", currentDateFull);
         editor.putString("current_date_short", currentDateShort);
-        editor.commit();
+        editor.apply();
     }
 
     public void loadDate() {
@@ -331,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             editor.remove(date + "_meal" + (i+1) + "_time");
             editor.remove(date + "_meal" + (i+1) + "_imgPath");
             editor.remove(date + "_meal" + (i+1) + "_imgSet");
-            editor.commit();
+            editor.apply();
         }
     }
 
@@ -394,25 +349,32 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         return true;
     }
 
+    private ArrayList<Bitmap> getImages() {
+        ArrayList<Bitmap> parts = new ArrayList<>();
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        for (int i = 0; i < 4; i++) {
+            String imgPath = sharedPreferences.getString(currentDateShort + "_meal" + (i+1) +"_imgPath", "");
+            if (!imgPath.isEmpty()) {
+                try {
+                    File f = new File(imgPath, currentDateShort.replace("/", "_") + "_meal" + (i+1) + ".jpg");
+                    Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+                    if (b != null) {
+                        Bitmap resized = Bitmap.createScaledBitmap(b, 400, 300, true);
+                        parts.add(resized);
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return parts;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.share:
-                ArrayList<Bitmap> parts = new ArrayList<>();
-                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-                for (int i = 0; i < 4; i++) {
-                    String imgPath = sharedPreferences.getString(currentDateShort + "_meal" + (i+1) +"_imgPath", "");
-                    if (!imgPath.isEmpty()) {
-                            try {
-                                File f = new File(imgPath, currentDateShort.replace("/", "_") + "_meal" + (i+1) + ".jpg");
-                                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-                                if (b != null)
-                                    parts.add(b);
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            }
-                    }
-                }
+                ArrayList<Bitmap> parts = getImages();
                 String dateStr = TimeManager.dateFormatter(calendar);
                 if (parts.size() == 0) {
                     Toast.makeText(this, "Please add more photos", Toast.LENGTH_SHORT).show();
@@ -442,22 +404,18 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
     private Bitmap createCollage(ArrayList<Bitmap> parts,String dateStr) {
-        /*Bitmap[] parts = new Bitmap[4];
-        parts[0] = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.googleplay);
-        parts[1] = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.googleplay);
-        parts[2] = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.googleplay);
-        parts[3] = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.googleplay);*/
         Bitmap logo = getBitmapFromDrawable(getResources().getDrawable(R.mipmap.ic_toast_round));
-        Bitmap date = textAsBitmap(dateStr, logo.getHeight() * 2 / 3, getResources().getColor(R.color.colorDashboardDeep));
-        Bitmap result = Bitmap.createBitmap(parts.get(0).getWidth(), parts.get(0).getHeight() * parts.size() + logo.getHeight() * 3/2, Bitmap.Config.ARGB_8888);
+        Bitmap logoResized = Bitmap.createScaledBitmap(logo, 50, 50, true);
+        Bitmap date = textAsBitmap(dateStr, (float) logoResized.getHeight() / 2, getResources().getColor(R.color.colorDashboardDeep));
+        Bitmap result = Bitmap.createBitmap(parts.get(0).getWidth(), parts.get(0).getHeight() * parts.size() + logoResized.getHeight() * 3/2, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(result);
         Paint paint = new Paint();
         canvas.drawColor(getResources().getColor(R.color.white));
         for (int i = 0; i < parts.size(); i++) {
-            canvas.drawBitmap(parts.get(i), 0, logo.getHeight() * 3/2 + parts.get(i).getHeight() * i, paint);
+            canvas.drawBitmap(parts.get(i), 0, (float) logoResized.getHeight() * 3/2 + parts.get(i).getHeight() * i, paint);
         }
-        canvas.drawBitmap(logo, logo.getWidth(), logo.getHeight() / 4, paint);
-        canvas.drawBitmap(date, logo.getWidth() * 5/2, logo.getHeight() / 4, paint);
+        canvas.drawBitmap(logoResized, logoResized.getWidth(), (float) logoResized.getHeight() / 4, paint);
+        canvas.drawBitmap(date, (float) logoResized.getWidth() * 5/2, (float) logoResized.getHeight() / 2, paint);
         return result;
     }
 
@@ -483,8 +441,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         return image;
     }
 
-    protected void shareImage(Bitmap mBitmap) {
-        Bitmap icon = mBitmap;
+    protected void shareImage(Bitmap icon) {
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("image/jpeg");
 
@@ -497,9 +454,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
         OutputStream outstream;
         try {
-            outstream = getContentResolver().openOutputStream(uri);
-            icon.compress(Bitmap.CompressFormat.JPEG, 100, outstream);
-            outstream.close();
+            if (uri != null) {
+                outstream = getContentResolver().openOutputStream(uri);
+                icon.compress(Bitmap.CompressFormat.JPEG, 100, outstream);
+                if (outstream != null) outstream.close();
+            }
         } catch (Exception e) {
             System.err.println(e.toString());
         }

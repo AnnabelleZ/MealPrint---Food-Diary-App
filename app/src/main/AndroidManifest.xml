@@ -29,7 +29,6 @@
         <activity android:name=".FeedbackActivity"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".RateUsActivity"/>
-        <activity android:name=".CollageViewActivity"/>
     </application>
 
 </manifest>
