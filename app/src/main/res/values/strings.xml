@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Food Diary</string>
+    <string name="app_name">MealPrint</string>
     <string name="share">Share</string>
     <string name="theme">Theme</string>
     <string name="feedback">Feedback</string>
@@ -29,9 +29,10 @@
     <string name="to">To:</string>
     <string name="subject">Subject:</string>
     <string name="yoursuggestion">Your Suggestions:</string>
-    <string name="email" translatable="false">fooddiary@gmail.com</string>
+    <string name="email" translatable="false">mealprint@gmail.com</string>
     <string name="send">Send</string>
     <string name="collage">Collage Maker</string>
+    <string name="publish">Currently working on publishing the apps to different store</string>
 
 
 </resources>

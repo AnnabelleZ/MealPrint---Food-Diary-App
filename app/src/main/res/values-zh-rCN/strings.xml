@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">饮食日记</string>
+    <string name="app_name">食迹</string>
     <string name="about">关于我们</string>
     <string name="breakfast">轻按添加早餐</string>
     <string name="contentdescription">餐食图片</string>
@@ -32,5 +32,6 @@
     <string name="yoursuggestion">你的建议：</string>
     <string name="send">发送</string>
     <string name="collage">拼图</string>
+    <string name="publish">正在施工中</string>
 
 </resources>

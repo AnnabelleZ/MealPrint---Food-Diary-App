@@ -149,14 +149,17 @@ public class SingleMeal1Activity extends UtilityActivity{
      * saves data, pass the title and imgPath to MainActivity
      **/
     public void backToMain() {
+        if (meal1_title.isEmpty()) {
+            editTitle.setText(getResources().getString(R.string.meal1title));
+        }
         saveData();
         loadData();
 
         // switch from SingleMeal1Activity to MainActivity
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra(EXTRA_TEXT, meal1_title);
+        /*intent.putExtra(EXTRA_TEXT, meal1_title);
 
-        intent.putExtra(EXTRA_PATH, imgPath);
+        intent.putExtra(EXTRA_PATH, imgPath);*/
         startActivity(intent);
     }
 

@@ -128,14 +128,17 @@ public class SingleMeal3Activity extends UtilityActivity{
     }
 
     public void backToMain() {
+        if (meal3_title.isEmpty()) {
+            editTitle.setText(getResources().getString(R.string.meal3title));
+        }
         saveData();
         loadData();
 
         // switch from SingleMeal3Activity to MainActivity
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra(EXTRA_TEXT, meal3_title);
+        /*intent.putExtra(EXTRA_TEXT, meal3_title);
 
-        intent.putExtra(EXTRA_PATH, imgPath);
+        intent.putExtra(EXTRA_PATH, imgPath);*/
         startActivity(intent);
     }
 

@@ -46,6 +46,12 @@
 
         </FrameLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/publish"
+            android:textSize="25sp"/>
+
         <Button
             android:id="@+id/gotogoogleplay"
             android:layout_width="match_parent"
@@ -58,7 +64,7 @@
             android:textSize="20sp"
             android:textAllCaps="false"
             android:text="@string/rateusongoogle"
-            android:visibility="visible"
+            android:visibility="invisible"
             />
 
         <Button
@@ -73,7 +79,7 @@
             android:textSize="20sp"
             android:textAllCaps="false"
             android:text="@string/rateusonamazon"
-            android:visibility="visible"
+            android:visibility="invisible"
             />
 
         <Button
@@ -88,7 +94,7 @@
             android:textSize="20sp"
             android:textAllCaps="false"
             android:text="@string/rateusontecent"
-            android:visibility="visible"
+            android:visibility="invisible"
             />
 
         <Button
@@ -103,7 +109,7 @@
             android:textSize="20sp"
             android:textAllCaps="false"
             android:text="@string/rateuson360"
-            android:visibility="visible"
+            android:visibility="invisible"
             />
 
         <Button
@@ -118,7 +124,7 @@
             android:textSize="20sp"
             android:textAllCaps="false"
             android:text="@string/rateusonbaidu"
-            android:visibility="visible"
+            android:visibility="invisible"
             />
 
         <Button
@@ -133,10 +139,8 @@
             android:textSize="20sp"
             android:textAllCaps="false"
             android:text="@string/rateusonhuawei"
-            android:visibility="visible"
+            android:visibility="invisible"
             />
-
-
 
     </LinearLayout>
 
