@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -70,6 +69,9 @@ public class SingleMeal1Activity extends UtilityActivity{
         setMealTime();
     }
 
+    /**
+     * sets the time to when the last photo of meal is taken
+     **/
     public void setMealTime() {
         time.setOnClickListener(new View.OnClickListener() {
             int currentHour;
@@ -82,11 +84,17 @@ public class SingleMeal1Activity extends UtilityActivity{
         });
     }
 
+    /**
+     * loads the imgSet indicator from the SharedPreferences
+     **/
     public void loadImageIndicator() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         imgSet = sharedPreferences.getBoolean(currentDateShort + "_meal1_imgSet", false);
     }
 
+    /**
+     * saves the title, note, and time taken to SharedPreferences
+     **/
     public void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -101,6 +109,9 @@ public class SingleMeal1Activity extends UtilityActivity{
         //Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * saves the photo to internal storage and save the imgPath in the internal storage to SharedPreferences
+     **/
     public void savePhoto() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -111,6 +122,9 @@ public class SingleMeal1Activity extends UtilityActivity{
         //Toast.makeText(this, "Photo saved", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * loads the title, note, imgPath, time from SharedPreferences to global variables
+     **/
     public void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         meal1_title = sharedPreferences.getString(currentDateShort + "_meal1_title", getResources().getString(R.string.meal1title));
@@ -119,6 +133,10 @@ public class SingleMeal1Activity extends UtilityActivity{
         meal1_time = sharedPreferences.getString(currentDateShort + "_meal1_time", "");
     }
 
+    /**
+     * updates the TextView for the title, note, time, and load image from storage and set
+     * as the image for the ImageView,
+     **/
     public void updateViews() {
         editTitle.setText(meal1_title);
         editNote.setText(meal1_note);
@@ -127,6 +145,9 @@ public class SingleMeal1Activity extends UtilityActivity{
         time.setText(meal1_time);
     }
 
+    /**
+     * saves data, pass the title and imgPath to MainActivity
+     **/
     public void backToMain() {
         saveData();
         loadData();

@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
@@ -101,17 +102,21 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         deleteOldPictures();
     }
 
-    public void setListenerChevronLeft() {
+    private void setListenerChevronLeft() {
         ImageButton yesterday = findViewById(R.id.toolbar_nav_left);
         yesterday.setOnClickListener((View v) -> goToYesterday());
     }
 
-    public void setListenerChevronRight() {
+    private void setListenerChevronRight() {
         ImageButton tomorrow = findViewById(R.id.toolbar_nav_right);
         tomorrow.setOnClickListener((View v) -> goToTomorrow());
     }
 
-    public void onItsWayPopUp(ImageButton button) {
+    /**
+     * sets onClickListener that shows the OnTheWay Popup for the button passed.
+     * @param button the button to set the onClickListener for
+     **/
+    private void onItsWayPopUp(ImageButton button) {
         button.setOnClickListener((View v) ->{
             onItsWay.setContentView(R.layout.on_the_way_popup);
             closePopup = onItsWay.findViewById(R.id.close_on_the_way);
@@ -126,8 +131,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         });
     }
 
-
-    public void updateLeftButtonColor() {
+    /**
+     * updates the color of chevron_left button and the listener
+     **/
+    private void updateLeftButtonColor() {
         ImageButton yesterday = findViewById(R.id.toolbar_nav_left);
         if (!dateAfterMinDate(calendar.getTime())) {
             // set < button to gray
@@ -139,7 +146,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
-    public void updateRightButtonColor() {
+    /**
+     * updates the color of chevron_right button and the listener
+     **/
+    private void updateRightButtonColor() {
         ImageButton tomorrow = findViewById(R.id.toolbar_nav_right);
         if (!dateBeforeMaxDate(calendar.getTime())) {
             // set > button to gray
@@ -159,28 +169,42 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         loadCardTime();
     }
 
-    public void goToYesterday() {
+    /**
+     * if the date is within the date range then reload the page to show the content of yesterday
+     **/
+    private void goToYesterday() {
         if (dateAfterMinDate(calendar.getTime())) {
             calendar.add(Calendar.DATE, -1);
             saveDateStateAndReloadPage();
         }
     }
 
-    public Boolean dateAfterMinDate(Date date) {
+    /**
+     * check if the date is after the minDate(7 days ago)
+     * @param date the date which is checked
+     **/
+    private Boolean dateAfterMinDate(Date date) {
         Calendar today = Calendar.getInstance();
         today.add(Calendar.DATE, -6);
         Date minDate = today.getTime();
         return date.after(minDate);
     }
 
-    public Boolean dateBeforeMaxDate(Date date) {
+    /**
+     * check if the date is before the maxDate(today)
+     * @param date the date which is checked
+     **/
+    private Boolean dateBeforeMaxDate(Date date) {
         Calendar today = Calendar.getInstance();
         today.add(Calendar.DATE, -1);
         Date maxDate = today.getTime();
         return date.before(maxDate);
     }
 
-    public void goToTomorrow() {
+    /**
+     * if the date is within the date range then reload the page to show the content of tomorrow
+     **/
+    private void goToTomorrow() {
         if (dateBeforeMaxDate(calendar.getTime())) {
             calendar.add(Calendar.DATE, 1);
             saveDateStateAndReloadPage();
@@ -188,7 +212,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     }
 
-    public void saveDateStateAndReloadPage() {
+    /**
+     * Save the date that's targeted by the user and update the page content based on the date
+     **/
+    private void saveDateStateAndReloadPage() {
         String currentDateString = TimeManager.dateFormatter(calendar);
 
         TextView date = findViewById(R.id.text_view_date);
@@ -214,7 +241,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         saveDateStateAndReloadPage();
     }
 
-    public void saveDate() {
+    /**
+     * update the date targeted by the user in sharedPreferences
+     **/
+    private void saveDate() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -223,7 +253,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         editor.apply();
     }
 
-    public void loadDate() {
+    /**
+     * load the date targeted by the user from sharedPreferences to the global variables
+     * update the text_view_date
+     **/
+    private void loadDate() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 
         calendar = Calendar.getInstance();
@@ -234,8 +268,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         textViewDate.setText(currentDateFull);
     }
 
+    /**
+     * load the images from the internal storage and update the background of cards
+     **/
     private void loadCardBackground() {
-        //Toast.makeText(this, "loadCardBackground", Toast.LENGTH_SHORT).show();
         ImageView card1background = findViewById(R.id.card1background);
         ImageView card2background = findViewById(R.id.card2background);
         ImageView card3background = findViewById(R.id.card3background);
@@ -251,6 +287,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         loadImageFromPath(card4background, imgPath4, currentDateShort.replace("/", "_") + "_meal4.jpg");
     }
 
+    /**
+     * load images from the internal storage and set as background of the cards
+     * @param background the background whose image will be set to the loaded image
+     * @param imgPath the path to load the image from
+     * @param name the name of the image file
+     **/
     private void loadImageFromPath(ImageView background, String imgPath, String name) {
         if (!imgPath.isEmpty()) {
             try {
@@ -268,6 +310,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
+    /**
+     * Delete the picture from 7 days ago from the internal storage as well as
+     * the relevant data from the SharedPreferences
+     **/
     private void deleteOldPictures() {
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         File imgPath = cw.getDir("imageDir", Context.MODE_PRIVATE);
@@ -290,6 +336,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
+    /**
+     * load card titles from the SharedPreferences and update the background of cards
+     **/
     private void loadCardTitle() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String meal1_title = sharedPreferences.getString(currentDateShort + "_meal1_title", "");
@@ -306,6 +355,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         setTitle(card4text, meal4_title, getResources().getString(R.string.snack));
     }
 
+    /**
+     * Update the color and text of card titles
+     * @param view the TextView whose text to be updated
+     * @param text the text to be used to update view
+     * @param hint original hint text on the card
+     **/
     private void setTitle(TextView view, String text, String hint) {
         if (!text.isEmpty()) {
             view.setTextColor(getResources().getColor(R.color.white));
@@ -317,6 +372,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
+    /**
+     * load the time the image of the meal was added from SharedPreferences and update
+     * the TextView that shows the time with it
+     **/
     private void loadCardTime() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String meal1_time = sharedPreferences.getString(currentDateShort + "_meal1_time", "");
@@ -333,6 +392,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         setTime(card4time, meal4_time);
     }
 
+    /**
+     * updates the TextView that shows time on the card
+     * @param view the TextView whose text to be updated
+     * @param text the text to be used to update view
+     **/
     private void setTime(TextView view, String text) {
         if (!text.isEmpty()) {
             view.setText(text);
@@ -345,10 +409,13 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
-
         return true;
     }
 
+    /**
+     * Get the background images of the cards from the internal storage
+     * @return an ArrayList of all the images in the form of Bitmaps
+     **/
     private ArrayList<Bitmap> getImages() {
         ArrayList<Bitmap> parts = new ArrayList<>();
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
@@ -403,10 +470,16 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     }
 
-    private Bitmap createCollage(ArrayList<Bitmap> parts,String dateStr) {
-        Bitmap logo = getBitmapFromDrawable(getResources().getDrawable(R.mipmap.ic_toast_round));
+    /**
+     * create the collage with the logo, the date targeted,
+     * and background images of each card to share to other programs
+     * @param parts an ArrayList of background images in the form of Bitmaps
+     * @param dateStr string represents the currentDate full
+     **/
+    private Bitmap createCollage(ArrayList<Bitmap> parts, String dateStr) {
+        Bitmap logo = ImageManager.getBitmapFromDrawable(getResources().getDrawable(R.mipmap.ic_toast_round));
         Bitmap logoResized = Bitmap.createScaledBitmap(logo, 50, 50, true);
-        Bitmap date = textAsBitmap(dateStr, (float) logoResized.getHeight() / 2, getResources().getColor(R.color.colorDashboardDeep));
+        Bitmap date = ImageManager.textAsBitmap(dateStr, (float) logoResized.getHeight() / 2, getResources().getColor(R.color.colorDashboardDeep));
         Bitmap result = Bitmap.createBitmap(parts.get(0).getWidth(), parts.get(0).getHeight() * parts.size() + logoResized.getHeight() * 3/2, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(result);
         Paint paint = new Paint();
@@ -419,29 +492,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         return result;
     }
 
-    private Bitmap getBitmapFromDrawable(Drawable drawable) {
-        final Bitmap bmp = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        final Canvas canvas = new Canvas(bmp);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-        return bmp;
-    }
-
-    public Bitmap textAsBitmap(String text, float textSize, int textColor) {
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setTextSize(textSize);
-        paint.setColor(textColor);
-        paint.setTextAlign(Paint.Align.LEFT);
-        float baseline = -paint.ascent(); // ascent() is negative
-        int width = (int) (paint.measureText(text) + 0.5f); // round
-        int height = (int) (baseline + paint.descent() + 0.5f);
-        Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(image);
-        canvas.drawText(text, 0, baseline, paint);
-        return image;
-    }
-
-    protected void shareImage(Bitmap icon) {
+    /**
+     * share the collage image to other programs
+     * @param icon the collage image to share to other programs
+     **/
+    private void shareImage(Bitmap icon) {
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("image/jpeg");
 

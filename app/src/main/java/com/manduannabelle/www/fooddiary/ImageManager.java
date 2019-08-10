@@ -11,6 +11,7 @@ import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,6 +27,12 @@ public class ImageManager {
         this.context = context;
     }
 
+    /**
+     * share the collage image to other programs
+     * @param meal the number for the meal
+     * @param imgSet implies if the image for the meal is set or not
+     * @param currentDate a string represents the targeted date
+     **/
     protected void saveImageIndicator(int meal, Boolean imgSet, String currentDate) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -33,6 +40,10 @@ public class ImageManager {
         editor.apply();
     }
 
+    /**
+     * darkens the bitmap
+     * @param bm the bitmap to be darken
+     **/
     protected static Bitmap darkenBitMap(Bitmap bm) {
 
         Canvas canvas = new Canvas(bm);
@@ -45,6 +56,12 @@ public class ImageManager {
         return bm;
     }
 
+    /**
+     * saves the image taken by camera or loaded from gallery to internal storage
+     * @param bitmapImage the image to save
+     * @param meal the number for the meal
+     * @param currentDate a string represents the targeted date
+     **/
     protected String saveImageToInternalStorage(Bitmap bitmapImage, int meal, String currentDate) {
         ContextWrapper cw = new ContextWrapper(context.getApplicationContext());
         // path to /data/data/FoodDiary/app_data/imageDir
@@ -70,21 +87,64 @@ public class ImageManager {
         return dir.getAbsolutePath();
     }
 
-    protected void loadImageFromStorage(String path, int meal, ImageView meal1image, String currentDate) {
+    /**
+     * Loads an image from internal storage
+     * @param path path to load the image from
+     * @param meal the number of meal
+     * @param mealImage the ImageView to set the image for
+     * @param currentDate a string represents the targeted date
+     **/
+    protected void loadImageFromStorage(String path, int meal, ImageView mealImage, String currentDate) {
         try {
             File f = new File(path, currentDate.replace("/", "_") + "_meal" + meal + ".jpg");
             Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
             if (b != null)
-                meal1image.setImageBitmap(b);
+                mealImage.setImageBitmap(b);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Rotates the bitmap by 270 degree
+     * @param source the bitmap to be rotated
+     **/
     protected static Bitmap rotateBitmap(Bitmap source) {
         Matrix matrix = new Matrix();
         matrix.postRotate(270);
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(source, source.getWidth(), source.getHeight(), true);
         return Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+    }
+
+    /**
+     * Creates a bitmap from a drawable
+     * @param drawable the drawable to create bitmap with
+     **/
+    protected static Bitmap getBitmapFromDrawable(Drawable drawable) {
+        final Bitmap bmp = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(bmp);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bmp;
+    }
+
+    /**
+     * Creates text bitmap
+     * @param text the text to create bitmap with
+     * @param textSize size of the text
+     * @param textColor color of the text
+     **/
+    protected static Bitmap textAsBitmap(String text, float textSize, int textColor) {
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setTextSize(textSize);
+        paint.setColor(textColor);
+        paint.setTextAlign(Paint.Align.LEFT);
+        float baseline = -paint.ascent(); // ascent() is negative
+        int width = (int) (paint.measureText(text) + 0.5f); // round
+        int height = (int) (baseline + paint.descent() + 0.5f);
+        Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(image);
+        canvas.drawText(text, 0, baseline, paint);
+        return image;
     }
 }
