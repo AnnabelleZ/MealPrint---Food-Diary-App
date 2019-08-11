@@ -33,4 +33,7 @@
     <string name="send">보내기</string>
     <string name="collage">콜라주</string>
     <string name="publish">Currently working on publishing the apps to different store</string>
+    <string name="info">MealPrint is large part a project by @AnnabelleZ, a student at University of Washington, to learn a little bit about Android Studio and mobile developing techniques.</string>
+    <string name="why">Why using MealPrint?\\n1. A reminder for you to get away from irregular eating habits\\n2. Visually pleasing to look at\\n3. Simpler to use than regular text-based memo\\n4. Make eating more fun\\n</string>
+    <string name="yoursuggestion">개선할 점:</string>
 </resources>

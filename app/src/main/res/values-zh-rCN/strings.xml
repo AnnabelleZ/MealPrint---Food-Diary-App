@@ -33,5 +33,7 @@
     <string name="send">发送</string>
     <string name="collage">拼图</string>
     <string name="publish">正在施工中</string>
+    <string name="info">食迹APP出品自@AnnabelleZ，华盛顿大学计算机科学系学生，做这款APP主要是为了学习与熟悉Android Studio和手机软件开发。</string>
+    <string name="why">食迹APP的优点是？\\n1. 时刻提醒你改正饮食不规律的毛病\\n2. 图片记录让你随意一瞥就知道一天吃了什么，简约美观\\ 3. 相比普通的文字记录，用起来更加简便\\n4. 唯爱与美食不可辜负，让你记录生活中的美好，让吃饭变得更有趣</string>
 
 </resources>
