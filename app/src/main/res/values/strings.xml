@@ -18,7 +18,7 @@
     <string name="note">Enter your note</string>
     <string name="contentdescription">a photo of your meal</string>
     <string name="opps">Opps</string>
-    <string name="ontheway">Currently only support 7 days of food diary. More features are on the way...</string>
+    <string name="ontheway">Currently only support 7 days of food diary. More features are on the way…</string>
     <string name="okay">Okay</string>
     <string name="rateusontecent">去腾讯应用宝写评价</string>
     <string name="rateusonbaidu">去百度手机助手写评价</string>
@@ -32,8 +32,20 @@
     <string name="email" translatable="false">mealprint@gmail.com</string>
     <string name="send">Send</string>
     <string name="collage">Collage Maker</string>
-    <string name="publish">Currently working on publishing the apps to different store</string>
-    <string name="info">MealPrint is large part a project by @AnnabelleZ, a student at University of Washington, to learn a little bit about Android Studio and mobile developing techniques.\n\n</string>
-    <string name="why">Why using MealPrint?\n1. A reminder for you to get away from irregular eating habits\n2. Visually pleasing to look at\n3. Simpler to use than regular text-based memo\n4. Make eating more fun\n</string>
+    <string name="publish">Currently working on publishing the apps to stores…</string>
+    <string name="info">"MealPrint is large part a project by @AnnabelleZ, a student at University of Washington, to learn a little bit about Android Studio and mobile developing techniques.\n\n</string>
+    <string name="why">MealPrint is a food diary app allows you to keep a photo record of what you eat for the last 7 days! Features:\n
+        \t- Taking photos of your meals or import from gallery\n
+        \t- Track the time of when you have each meal\n
+        \t- Note section for each meal\n
+        \t- Supports 7 days of records\n
+        \t- Sharing function that automatically makes a collage of your one-day meals, ready for you to share with you friends\n
+        \t- Supports English, Chinese (Simplified), Chinese (Traditional), and Korean\n\n
+
+        Why using MealPrint?\n
+        \t- A reminder for you to get away from irregular eating habits\n
+        \t- Visually pleasing to look at\n
+        \t- Simpler to use than regular text-based memo\n
+        \t- Make eating more fun\n</string>
 
 </resources>

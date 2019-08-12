@@ -19,7 +19,7 @@
     <string name="meal2title">午餐</string>
     <string name="meal1title">早餐</string>
     <string name="okay">好吧</string>
-    <string name="ontheway">目前我们只支持记录7天的食物日记哦，更多功能正在路上...</string>
+    <string name="ontheway">目前我们只支持记录7天的食物日记哦，更多功能正在路上…</string>
     <string name="opps">哎呀</string>
     <string name="rateusontecent">去腾讯应用宝写评价</string>
     <string name="rateuson360">去360手机助手写评价</string>
@@ -33,7 +33,18 @@
     <string name="send">发送</string>
     <string name="collage">拼图</string>
     <string name="publish">正在施工中</string>
-    <string name="info">食迹APP出品自@AnnabelleZ，华盛顿大学计算机科学系学生，做这款APP主要是为了学习与熟悉Android Studio和手机软件开发。</string>
-    <string name="why">食迹APP的优点是？\\n1. 时刻提醒你改正饮食不规律的毛病\\n2. 图片记录让你随意一瞥就知道一天吃了什么，简约美观\\ 3. 相比普通的文字记录，用起来更加简便\\n4. 唯爱与美食不可辜负，让你记录生活中的美好，让吃饭变得更有趣</string>
+    <string name="info">食迹APP出品自@AnnabelleZ，华盛顿大学计算机科学系学生，做这款APP主要是为了学习与熟悉Android Studio和手机软件开发。\n\n</string>
+    <string name="why">
+        食迹，是一款可以帮助用户轻松记录过去一周详细饮食情况的美食手帐APP，支持以下丰富功能：\n\t- 即时拍照打卡，生成具体用餐时间\n
+      \t- 支持笔记功能，随心所欲记录所需内容\n
+      \t- 手帐体量科学，可保存7天完整饮食情况\n
+      \t- 自动生成拼图，随时随地与家人朋友分享\n
+      \t- 支持简体中文、繁体中文、英文、韩文四种语言\n\n
+
+        “食迹”APP有哪些优点？\n
+        \t - 图片记录简洁美观，三餐情况一目了然\n
+        \t - 时刻提醒用户，帮助矫正不健康的饮食习惯\n
+        \t - 比起单调的文字记录，图文并茂更加直观生动\n
+    </string>
 
 </resources>

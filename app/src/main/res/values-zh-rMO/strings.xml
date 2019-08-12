@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">食跡</string>
+    <string name="about">關於我們</string>
+    <string name="breakfast">輕按添加早餐</string>
+    <string name="contentdescription">餐食圖片</string>
+    <string name="calendar">日歷</string>
+    <string name="dinner">輕按添加晚餐</string>
+    <string name="lunch">輕按添加午餐</string>
+    <string name="snack">輕按添加零食</string>
+    <string name="theme">主題</string>
+    <string name="share">分享</string>
+    <string name="retake">重拍</string>
+    <string name="note">輸入筆記</string>
+    <string name="rateus">評分</string>
+    <string name="feedback">意見反饋</string>
+    <string name="meal4title">零食</string>
+    <string name="meal3title">晚餐</string>
+    <string name="meal2title">午餐</string>
+    <string name="meal1title">早餐</string>
+    <string name="okay">好吧</string>
+    <string name="ontheway">目前我們只支持記錄7天的食物日記哦，更多功能正在路上…</string>
+    <string name="opps">哎呀</string>
+    <string name="rateusontecent">去騰訊應用寶寫評價</string>
+    <string name="rateuson360">去360手機助手寫評價</string>
+    <string name="rateusonbaidu">去百度手機助手寫評價</string>
+    <string name="rateusonhuawei">去華為應用市場寫評價</string>
+    <string name="rateusonamazon">去亞馬遜應用商店寫評價</string>
+    <string name="rateusongoogle">去谷歌商店寫評價</string>
+    <string name="subject">主題：</string>
+    <string name="to">收件人：</string>
+    <string name="yoursuggestion">妳的建議：</string>
+    <string name="send">發送</string>
+    <string name="collage">拼圖</string>
+    <string name="publish">正在施工中</string>
+    <string name="info">食跡APP出品自@AnnabelleZ，華盛頓大學計算機科學系學生，做這款APP主要是為了學習與熟悉Android Studio和手機軟件開發。\n\n</string>
+    <string name="why">
+        食跡，是壹款可以幫助用戶輕松記錄過去壹周詳細飲食情況的美食手帳APP，支持以下豐富功能：\n\t- 即時拍照打卡，生成具體用餐時間\n
+      \t- 支持筆記功能，隨心所欲記錄所需內容\n
+      \t- 手帳體量科學，可保存7天完整飲食情況\n
+      \t- 自動生成拼圖，隨時隨地與家人朋友分享\n
+      \t- 支持簡體中文、繁體中文、英文、韓文四種語言\n\n
+
+        “食跡”APP有哪些優點？\n
+        \t - 圖片記錄簡潔美觀，三餐情況壹目了然\n
+        \t - 時刻提醒用戶，幫助矯正不健康的飲食習慣\n
+        \t - 比起單調的文字記錄，圖文並茂更加直觀生動\n
+    </string>
+</resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">음식일기</string>
-    <string name="about">음식일기에 관하여</string>
+    <string name="app_name">오늘 뭐 먹었지</string>
+    <string name="about">오늘 뭐 먹었지에 관하여</string>
     <string name="breakfast">아침식사 추가</string>
     <string name="calendar">달력</string>
     <string name="contentdescription">식사사진</string>
@@ -20,7 +20,7 @@
     <string name="theme">주제</string>
     <string name="opps">"헐 ~ㅋ "</string>
     <string name="okay">오케이!</string>
-    <string name="ontheway">음식일기는 현자 일주일까지만 지원하는 중입니다. 조금만 더 기다려주세요</string>
+    <string name="ontheway">오늘 뭐 먹었지는 현자 일주일까지만 지원하는 중입니다. 조금만 더 기다려주세요</string>
     <string name="rateuson360">去360手机助手写评价</string>
     <string name="rateusonbaidu">去百度手机助手写评价</string>
     <string name="rateusonhuawei">去华为应用市场写评价</string>
@@ -29,11 +29,26 @@
     <string name="rateusongoogle">구글플레이에서 저희를 평가해주세요</string>
     <string name="subject">제목 :</string>
     <string name="to">To:</string>
-    <string name="yoursuggestion">개선할 점:</string>
     <string name="send">보내기</string>
     <string name="collage">콜라주</string>
-    <string name="publish">Currently working on publishing the apps to different store</string>
-    <string name="info">MealPrint is large part a project by @AnnabelleZ, a student at University of Washington, to learn a little bit about Android Studio and mobile developing techniques.</string>
-    <string name="why">Why using MealPrint?\\n1. A reminder for you to get away from irregular eating habits\\n2. Visually pleasing to look at\\n3. Simpler to use than regular text-based memo\\n4. Make eating more fun\\n</string>
+    <string name="publish">이 부분은 아직 개발중이에요~</string>
+    <string name="info">앱 오늘 뭐 먹었지는 워싱턴 주입대학 @AnnabelleZ 가 안드로이드 스튜디오와 모바일 개발 및 기술을 공부하기위해 만든 프로젝트 입니다\n\n</string>
+    <string name="why">
+        "오늘 뭐 먹었지"를 통해 오늘 내 음식을 사진일기형식으로 보관하고 공유 해보세요 "오늘 뭐 먹었지"는 내가 지난 일주일간 먹은 음식일기들을 저장해 줍니다!\n
+
+        \t- 음식사진을 찍거나, 음식사진을 갤러리에서 가져오세요\n
+        \t- 언제 뭘 먹었는지 자신의 지난 식단을 확인해보세요\n
+        \t- 각 사진에 관하여 노트를 남겨보세요\n
+        \t- 일주일간 음식일기를 저장해줍니다!\n
+        \t- 자신의 식단을 자동적으로 다른 친구들과 나눠보세요! 친구와 함께 다이어트, 건강식단 등을 공유하여 서로를 응원해 보세요!\n
+        \t- 영어, 중국어(간체), 중국어(번체), 한국어를 지원합니다\n\n
+
+
+        왜 "오늘 뭐 먹었지" 를 사용해야하죠? \n
+        \t- 현대인의 큰 문제들중 하나인 불규칙적인 식습관과 불균형한 식단을 기록하여 고쳐보세요!\n
+        \t- 기존 일기 앱보다, 매일 식사시간에 간단히 사진과 함께 기록해보세요!\n
+        \t- 식사시간이 기다려지게 될거에요! \n
+        \t- 항상 올바른 시간에 식사를 할 수 있게 알람을 설정할 수 있어요!\n
+    </string>
     <string name="yoursuggestion">개선할 점:</string>
 </resources>
