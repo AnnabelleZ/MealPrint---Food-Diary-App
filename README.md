@@ -11,6 +11,6 @@ Currently supporting these features:
  - Supports English, Chinese (Simplified), and Korean
 
 ## Screenshots
-![home page of app](https://github.com/AnnabelleZ/MealPrint/blob/master/Screenshots/Screenshot_20190810-210245_Package%20installer.jpg?raw=true | width=200)
-![meal1 page of app](https://github.com/AnnabelleZ/MealPrint/blob/master/Screenshots/Screenshot_20190810-210423_MealPrint.jpg?raw=true | width=200)
-![home page of app with all meals created](https://github.com/AnnabelleZ/MealPrint/blob/master/Screenshots/Screenshot_20190810-210700_MealPrint.jpg?raw=true | width=200)
+<img src="https://github.com/AnnabelleZ/MealPrint/blob/master/Screenshots/Screenshot_20190810-210245_Package%20installer.jpg?raw=true" width="300">
+<img src="https://github.com/AnnabelleZ/MealPrint/blob/master/Screenshots/Screenshot_20190810-210423_MealPrint.jpg?raw=true" width="300">
+<img src="https://github.com/AnnabelleZ/MealPrint/blob/master/Screenshots/Screenshot_20190810-210700_MealPrint.jpg?raw=true" width="300">
