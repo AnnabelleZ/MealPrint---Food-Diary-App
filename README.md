@@ -1,5 +1,6 @@
 # MealPrint
 MealPrint is a food diary app allows you to keep a photo record of what you eat for the last 7 days!
+[Download on Google Play](https://play.google.com/store/apps/details?id=com.manduannabelle.www.fooddiary&hl=en_US "Download on Google Play")
 
 ## Features
 Currently supporting these features:
