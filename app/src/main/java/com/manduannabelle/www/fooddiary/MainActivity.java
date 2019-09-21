@@ -169,6 +169,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         loadCardTime();
     }
 
+
     /**
      * if the date is within the date range then reload the page to show the content of yesterday
      **/
@@ -341,18 +342,26 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
      **/
     private void loadCardTitle() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String meal1_title = sharedPreferences.getString(currentDateShort + "_meal1_title", "");
-        String meal2_title = sharedPreferences.getString(currentDateShort + "_meal2_title", "");
-        String meal3_title = sharedPreferences.getString(currentDateShort + "_meal3_title", "");
-        String meal4_title = sharedPreferences.getString(currentDateShort + "_meal4_title", "");
+        String meal1_title = sharedPreferences.getString(currentDateShort + "_meal1_title", "Breakfast");
+        Toast.makeText(getApplicationContext(), meal1_title, Toast.LENGTH_SHORT).show();
+        String meal2_title = sharedPreferences.getString(currentDateShort + "_meal2_title", "Lunch");
+        String meal3_title = sharedPreferences.getString(currentDateShort + "_meal3_title", "Dinner");
+        String meal4_title = sharedPreferences.getString(currentDateShort + "_meal4_title", "Snacks");
         TextView card1text = findViewById(R.id.card1text);
         TextView card2text = findViewById(R.id.card2text);
         TextView card3text = findViewById(R.id.card3text);
         TextView card4text = findViewById(R.id.card4text);
-        setTitle(card1text, meal1_title, getResources().getString(R.string.breakfast));
-        setTitle(card2text, meal2_title, getResources().getString(R.string.lunch));
-        setTitle(card3text, meal3_title, getResources().getString(R.string.dinner));
-        setTitle(card4text, meal4_title, getResources().getString(R.string.snack));
+        setTitle(1, card1text, meal1_title, getResources().getString(R.string.breakfast));
+        setTitle(2, card2text, meal2_title, getResources().getString(R.string.lunch));
+        setTitle(3, card3text, meal3_title, getResources().getString(R.string.dinner));
+        setTitle(4, card4text, meal4_title, getResources().getString(R.string.snack));
+    }
+
+    public Boolean hasContent(int meal) {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        Boolean imgSet = sharedPreferences.getBoolean(currentDateShort + "_meal" + meal + "_imgSet", false);
+        String note = sharedPreferences.getString(currentDateShort + "_meal" + meal + "_note", "");
+        return !note.isEmpty() || imgSet;
     }
 
     /**
@@ -361,13 +370,16 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
      * @param text the text to be used to update view
      * @param hint original hint text on the card
      **/
-    private void setTitle(TextView view, String text, String hint) {
-        if (!text.isEmpty()) {
+    private void setTitle(int meal, TextView view, String text, String hint) {
+        if (hasContent(meal)) {
             view.setTextColor(getResources().getColor(R.color.white));
             view.setText(text.toUpperCase());
         } else {
             if (view.getId() != R.id.card4text)
                 view.setTextColor(getResources().getColor(R.color.colorDashboardDeep));
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+            sharedPreferences.edit().putString(currentDateShort + "_meal" + meal + "_title", "").apply();
+            sharedPreferences.edit().putString(currentDateShort + "_meal" + meal + "_time", "").apply();
             view.setText(hint);
         }
     }
@@ -386,10 +398,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         TextView card2time = findViewById(R.id.card2time);
         TextView card3time = findViewById(R.id.card3time);
         TextView card4time = findViewById(R.id.card4time);
-        setTime(card1time, meal1_time);
-        setTime(card2time, meal2_time);
-        setTime(card3time, meal3_time);
-        setTime(card4time, meal4_time);
+        setTime(1, card1time, meal1_time);
+        setTime(2, card2time, meal2_time);
+        setTime(3, card3time, meal3_time);
+        setTime(4, card4time, meal4_time);
     }
 
     /**
@@ -397,8 +409,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
      * @param view the TextView whose text to be updated
      * @param text the text to be used to update view
      **/
-    private void setTime(TextView view, String text) {
-        if (!text.isEmpty()) {
+    private void setTime(int meal, TextView view, String text) {
+        if (!text.isEmpty() && hasContent(meal)) {
             view.setText(text);
         } else {
             view.setText("");

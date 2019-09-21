@@ -1,6 +1,8 @@
 package com.manduannabelle.www.fooddiary;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -12,6 +14,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
+
 import java.util.Calendar;
 
 import in.mayanknagwanshi.imagepicker.ImageSelectActivity;
@@ -62,6 +67,7 @@ public class SingleMeal1Activity extends UtilityActivity{
         updateViews();
         takePhoto();
         retake();
+        remove();
 
         // go back
         ImageButton backButton = findViewById(R.id.toolbar_back);
@@ -127,7 +133,7 @@ public class SingleMeal1Activity extends UtilityActivity{
      **/
     public void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        meal1_title = sharedPreferences.getString(currentDateShort + "_meal1_title", getResources().getString(R.string.meal1title));
+        meal1_title = sharedPreferences.getString(currentDateShort + "_meal1_title", "");//getResources().getString(R.string.meal1title));
         meal1_note = sharedPreferences.getString(currentDateShort + "_meal1_note", "");
         imgPath = sharedPreferences.getString(currentDateShort + "_meal1_imgPath", "");
         meal1_time = sharedPreferences.getString(currentDateShort + "_meal1_time", "");
@@ -149,18 +155,60 @@ public class SingleMeal1Activity extends UtilityActivity{
      * saves data, pass the title and imgPath to MainActivity
      **/
     public void backToMain() {
-        if (meal1_title.isEmpty()) {
+        // set default title
+        if (editTitle.getText().toString().isEmpty()) {
             editTitle.setText(getResources().getString(R.string.meal1title));
+        }
+        // set default time
+        if (time.getText().toString().isEmpty()) {
+            TimeManager.setDefaultTime(time);
         }
         saveData();
         loadData();
 
         // switch from SingleMeal1Activity to MainActivity
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        /*intent.putExtra(EXTRA_TEXT, meal1_title);
-
-        intent.putExtra(EXTRA_PATH, imgPath);*/
         startActivity(intent);
+    }
+
+    public void clearPage() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(currentDateShort + "_meal1_title", "");
+        editor.putString(currentDateShort + "_meal1_note", "");
+        editor.remove(currentDateShort + "_meal1_imgPath");
+        editor.putString(currentDateShort + "_meal1_time", "");
+        imgSet = false;
+        imgManager.saveImageIndicator(1, imgSet, currentDateShort);
+        editor.apply();
+        loadData();
+        updateViews();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void remove() {
+        ImageButton removeBtn = findViewById(R.id.toolbar_delete);
+        removeBtn.setOnClickListener((View v) -> {
+            AlertDialog.Builder dial = new AlertDialog.Builder(SingleMeal1Activity.this);
+            dial.setMessage(getResources().getString(R.string.removeSure)).setCancelable(false)
+                    .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            clearPage();
+                        }
+                    })
+                    .setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+
+            AlertDialog alert = dial.create();
+            alert.setTitle(getResources().getString(R.string.remove));
+            alert.show();
+        });
     }
 
     /* ----------------------------------- PHOTO TAKING ------------------------------- */
@@ -188,6 +236,10 @@ public class SingleMeal1Activity extends UtilityActivity{
             editor.apply();
             imgPath = sharedPreferences.getString(currentDateShort + "_meal1_imgPath", "");
             meal1image.setImageResource(android.R.color.transparent);
+            // set time to be default time
+            time.setText("");
+            TimeManager.setDefaultTime(time);
+            sharedPreferences.edit().putString(currentDateShort + "_meal1_time", time.getText().toString()).apply();
             takePhoto();
         });
 
@@ -204,6 +256,7 @@ public class SingleMeal1Activity extends UtilityActivity{
             }
             meal1image.setImageBitmap(selectedImage);
             TimeManager.setDefaultTime(time);
+            time.setVisibility(View.VISIBLE);
             imgSet = true;
             imgManager.saveImageIndicator(1, imgSet, currentDateShort);
             savePhoto();

@@ -31,7 +31,16 @@
 
         <include
             layout="@layout/toolbar_date"/>
-        
+
+        <ImageButton
+            android:id="@+id/toolbar_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="?attr/actionBarSize"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/ic_delete_24dp"/>
+
         <TextView
             android:id="@+id/toolbar_retake"
             android:layout_width="wrap_content"

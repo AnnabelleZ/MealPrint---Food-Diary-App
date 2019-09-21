@@ -60,7 +60,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"-->
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:paddingTop="10dp"
                 android:autofillHints="@string/meal4title"
-                android:hint="@string/meal3title"
+                android:hint="@string/meal4title"
                 android:background="@android:color/transparent"/>
 
             <com.manduannabelle.www.fooddiary.LinedEditText

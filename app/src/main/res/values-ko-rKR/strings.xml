@@ -51,4 +51,8 @@
         \t- 항상 올바른 시간에 식사를 할 수 있게 알람을 설정할 수 있어요!\n
     </string>
     <string name="yoursuggestion">개선할 점:</string>
+    <string name="no">아니요</string>
+    <string name="yes">네</string>
+    <string name="remove">식사를 치우다</string>
+    <string name="removeSure">이 식사를 정말로 삭제 하시겠습니까?</string>
 </resources>

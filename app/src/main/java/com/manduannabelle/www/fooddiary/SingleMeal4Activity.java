@@ -1,6 +1,8 @@
 package com.manduannabelle.www.fooddiary;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -62,6 +64,7 @@ public class SingleMeal4Activity extends UtilityActivity{
         updateViews();
         takePhoto();
         retake();
+        remove();
 
         // go back
         ImageButton backButton = findViewById(R.id.toolbar_back);
@@ -128,19 +131,61 @@ public class SingleMeal4Activity extends UtilityActivity{
     }
 
     public void backToMain() {
-        if (meal4_title.isEmpty()) {
+        if (editTitle.getText().toString().isEmpty()) {
             editTitle.setText(getResources().getString(R.string.meal4title));
+        }
+        // set default time
+        if (time.getText().toString().isEmpty()) {
+            TimeManager.setDefaultTime(time);
         }
         saveData();
         loadData();
 
         // switch from SingleMeal4Activity to MainActivity
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        /*intent.putExtra(EXTRA_TEXT, meal4_title);
-
-        intent.putExtra(EXTRA_PATH, imgPath);*/
         startActivity(intent);
     }
+
+    public void clearPage() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(currentDateShort + "_meal4_title", "");
+        editor.putString(currentDateShort + "_meal4_note", "");
+        editor.remove(currentDateShort + "_meal4_imgPath");
+        editor.putString(currentDateShort + "_meal4_time", "");
+        imgSet = false;
+        imgManager.saveImageIndicator(4, imgSet, currentDateShort);
+        editor.apply();
+        loadData();
+        updateViews();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void remove() {
+        ImageButton removeBtn = findViewById(R.id.toolbar_delete);
+        removeBtn.setOnClickListener((View v) -> {
+            AlertDialog.Builder dial = new AlertDialog.Builder(SingleMeal4Activity.this);
+            dial.setMessage(getResources().getString(R.string.removeSure)).setCancelable(false)
+                    .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            clearPage();
+                        }
+                    })
+                    .setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+
+            AlertDialog alert = dial.create();
+            alert.setTitle(getResources().getString(R.string.remove));
+            alert.show();
+        });
+    }
+
 
     /* ----------------------------------- PHOTO TAKING ------------------------------- */
     public void takePhoto() {
@@ -167,6 +212,10 @@ public class SingleMeal4Activity extends UtilityActivity{
             editor.apply();
             imgPath = sharedPreferences.getString(currentDateShort + "_meal4_imgPath", "");
             meal4image.setImageResource(android.R.color.transparent);
+            // set time to be default time
+            time.setText("");
+            TimeManager.setDefaultTime(time);
+            sharedPreferences.edit().putString(currentDateShort + "_meal4_time", time.getText().toString()).apply();
             takePhoto();
         });
 
@@ -183,6 +232,7 @@ public class SingleMeal4Activity extends UtilityActivity{
             }
             meal4image.setImageBitmap(selectedImage);
             TimeManager.setDefaultTime(time);
+            time.setVisibility(View.VISIBLE);
             imgSet = true;
             imgManager.saveImageIndicator(4, imgSet, currentDateShort);
             savePhoto();

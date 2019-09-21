@@ -47,5 +47,9 @@
         \t- Visually pleasing to look at\n
         \t- Simpler to use than regular text-based memo\n
         \t- Make eating more fun\n</string>
+    <string name="remove">Remove the Meal</string>
+    <string name="removeSure">Are you sure you want to remove this meal?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>

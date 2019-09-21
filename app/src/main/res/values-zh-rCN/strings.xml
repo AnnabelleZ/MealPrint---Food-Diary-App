@@ -46,5 +46,9 @@
         \t - 时刻提醒用户，帮助矫正不健康的饮食习惯\n
         \t - 比起单调的文字记录，图文并茂更加直观生动\n
     </string>
+    <string name="remove">清除餐食</string>
+    <string name="removeSure">确定要清除这餐的内容吗？</string>
+    <string name="yes">是，清除</string>
+    <string name="no">否，不清除</string>
 
 </resources>
