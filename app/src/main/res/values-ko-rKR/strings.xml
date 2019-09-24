@@ -53,6 +53,7 @@
     <string name="yoursuggestion">개선할 점:</string>
     <string name="no">아니요</string>
     <string name="yes">네</string>
-    <string name="remove">식사를 치우다</string>
-    <string name="removeSure">이 식사를 정말로 삭제 하시겠습니까?</string>
+    <string name="remove">제거하기</string>
+    <string name="removeSure">정말 제거하시겠습니까?</string>
+    <string name="addmorephotoalarm">첫번째 사진을 먼저 등록해주세요</string>
 </resources>

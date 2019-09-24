@@ -51,5 +51,6 @@
     <string name="removeSure">Are you sure you want to remove this meal?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="addmorephotoalarm">Please add photos first</string>
 
 </resources>

@@ -60,12 +60,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         onItsWay = new Dialog(this);
 
         ImageButton imgButton = findViewById(R.id.toolbar_calendar);
-        imgButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        imgButton.setOnClickListener((View v) -> {
                 DialogFragment datePicker = new DatePickerFragment();
                 datePicker.show(getSupportFragmentManager(), "date picker");
-            }
         });
 
         // for the date on the toolbar
@@ -343,7 +340,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     private void loadCardTitle() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String meal1_title = sharedPreferences.getString(currentDateShort + "_meal1_title", "Breakfast");
-        Toast.makeText(getApplicationContext(), meal1_title, Toast.LENGTH_SHORT).show();
         String meal2_title = sharedPreferences.getString(currentDateShort + "_meal2_title", "Lunch");
         String meal3_title = sharedPreferences.getString(currentDateShort + "_meal3_title", "Dinner");
         String meal4_title = sharedPreferences.getString(currentDateShort + "_meal4_title", "Snacks");
@@ -456,7 +452,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 ArrayList<Bitmap> parts = getImages();
                 String dateStr = TimeManager.dateFormatter(calendar);
                 if (parts.size() == 0) {
-                    Toast.makeText(this, "Please add more photos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getResources().getString(R.string.addmorephotoalarm), Toast.LENGTH_SHORT).show();
                 } else {
                     shareImage(createCollage(parts, dateStr));
                 }

@@ -50,4 +50,5 @@
     <string name="remove">清除餐食</string>
     <string name="yes">是，清除</string>
     <string name="no">否，不清除</string>
+    <string name="addmorephotoalarm">請先添加圖片</string>
 </resources>

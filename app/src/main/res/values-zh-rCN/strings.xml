@@ -50,5 +50,6 @@
     <string name="removeSure">确定要清除这餐的内容吗？</string>
     <string name="yes">是，清除</string>
     <string name="no">否，不清除</string>
+    <string name="addmorephotoalarm">请先添加图片</string>
 
 </resources>
