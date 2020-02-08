@@ -7,7 +7,7 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 
 /* code from https://stackoverflow.com/questions/10992411/how-to-add-pagelines-to-a-edittext-in-android */
-public class LinedEditText extends android.support.v7.widget.AppCompatEditText
+public class LinedEditText extends androidx.appcompat.widget.AppCompatEditText
 {
     private Rect mRect;
     private Paint mPaint;
